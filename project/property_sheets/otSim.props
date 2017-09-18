@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IntDir>$(SolutionDir)..\build\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <ImportLibrary>$(SolutionDir)..\..\lib\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdparty;../../include;../../include/otSimWrapper;../../include/otSim;../../include/otCore;../../include/otMain;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
