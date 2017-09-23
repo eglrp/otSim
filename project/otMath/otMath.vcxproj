@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2A8AD512-9ABA-4C7D-8F31-6DAE9D222B6C}</ProjectGuid>
+    <RootNamespace>otMath</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\property_sheets\otSim.props" />
+    <Import Project="..\property_sheets\ouputDirFix.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\property_sheets\otSim.props" />
+    <Import Project="..\property_sheets\ouputDirFix.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>MATH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>MATH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\Splines\src\Splines.hh" />
+    <ClInclude Include="..\..\3rdparty\Splines\src\SplinesCinterface.h" />
+    <ClInclude Include="..\..\3rdparty\Splines\src\Splines_doxygen.hh" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tmg\tmg.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix2.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix3.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix4.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\quaternion.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\tm.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\tmconfig.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector2.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector3.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector4.h" />
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vectorn.h" />
+    <ClInclude Include="..\..\include\otMath\otMath.h" />
+    <ClInclude Include="..\..\include\otMath\Table.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineAkima.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineAkima2D.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBessel.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBiCubic.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBilinear.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBiQuintic.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBSpline.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineConstant.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineCubic.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineCubicBase.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineHermite.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineLinear.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinePchip.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineQuintic.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineQuinticBase.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\Splines.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinesBivariate.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinesCinterface.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineSet.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineSetGC.cc" />
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinesUnivariate.cc" />
+    <ClCompile Include="..\..\include\otMath\Conversions.cpp" />
+    <ClCompile Include="..\..\src\otMath\Table.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

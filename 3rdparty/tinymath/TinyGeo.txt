@@ -1,0 +1,21 @@
+Introduction
+Welcome to the documentation of tinygeo. tinygeo is an geometric extension to the tinymath template library.
+Features
+
+    * extends the vector class
+    * extends the matrix class
+    * extends the quaterion class
+
+Installation
+The installation of tinygeo is like the installation of tinymath. As tinygeo is completely written as a c++ template too you don't have to compile anything at all. You should only copy the necessary files into your project that's all.
+
+Supported compiler
+At the moment the library works with this compilers
+
+    * Visual Studio 6/7/8
+    * Gnu/Gcc 3.3
+    * Digital Mars
+
+It would be very helpful if you can test it on other platforms and compiler. If you find bugs please tell me these so I can fix it.
+
+Cengiz Terzibas cengiz@terzibas.de 

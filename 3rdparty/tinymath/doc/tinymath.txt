@@ -1,0 +1,494 @@
+﻿
+/*! \mainpage TinyMath
+        \section maineinleitung Introduction
+        Welcome to the documentation of tinymath. One reason for the birth of tinymath was to develop a light,
+        powerful and flexible mathematical library. The base of tinymath is really small. Only necessary 
+        operations are implemented. If you need more functions than addition or multiplication you have to use 
+        another project that is based on tinymath. For instance, if you want to use geometrical functions for 
+        matrixes you can use tinygeo.
+        
+        @note There are template specialized vectorn and matrix versions, which are vectorn<type, 2/3/4> and matrix<type, 2/3/4, 2/3/4>. 
+         
+        
+        \section mainmerkmale Features
+
+        - completely written as c++ template
+        - vector (vectorn) class
+        - matrix class
+        - quaternion class
+
+        \section maininstallation Installation
+        The installation of tinymath is simple. Since tinymath is completely written as a c++ template you
+        don't have to compile anything at all. Copy only the necessary files into your project, that's all.
+
+        \section maincompiler Supported compiler
+        At the moment the library works with following compilers
+
+        - Visual Studio 6/7/8
+        - Gnu/Gcc 3.3
+        - Digital Mars
+
+        It would be very helpful if you can test it on other platforms and compilers. If you find any bugs, please report these so I can fix it.
+
+        \section mainzusatz Extension to tinymath
+        The main goal is to keep tinymath as small as possible. So only standard linear algebraic operation are
+        implemented. If you need more functions like creating a rotation matrix or a spherical interpolated quaternion
+        you should take a look at \ref tinygeo.
+        Tinygeo is based on tinymath with additional geometry functions.
+
+        \section mainadditional Important notes
+        All access methods of the classes has no border verification. This means, if you access member variables via \b [] operator you should be careful. For example if you 
+        have a vectorn<T,3> class and you access the fourth element the result could be a segmentation fault. The reason for leaving out the border check is to save cpu capacity.
+        
+        Have fun, 
+        
+        Cengiz Terzibas cengiz@terzibas.de
+*/
+
+
+
+/*!
+        \page tinygeo TinyGeo
+        For more information about tinygeo you should read the documentation.
+*/
+
+/*!
+        \page tutorial1 The vector class
+        \section tutorial1def Definition
+        Here are different methods to create a vectorn object:
+
+        \code
+        // Produces an empty vector
+        tmath::vectorn<type, tupel> v1;
+        
+        // Initiates the vector with values
+        tmath::vectorn<float, 3> v2(0.0f, 1.0f, 25.65f);
+
+        // Initiates the vector by another vector
+        tmath::vectorn<float, 3> v3(v2);
+        \endcode
+        
+        The identifier \b type can be \c float , \c double or an \c int. 
+        The identifier \b tupel is the number of components that should be supported by this vector object.
+        You should know that if you are using \b int types you will get rounding errors because you are not working 
+        with real values.
+
+        \section tutorial1add Addition, Subtraction
+        A vector can be added or subtracted like this example:
+
+        \code
+        tmath::vectorn<float,3> v1(0.0f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v2(1.0f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v3;
+        
+        // Addition
+        v3 = v1 + v2;
+        v3 += v1;
+        
+        // Subtraction
+        v3 = v1 - v2;
+        v3 -= v1;
+        \endcode
+
+        \section tutorial1mul Multiplication and Division
+        Two vectors can be multiplicated by each other. The result is the scalar product. One can also multiplicate
+        the vector with a scalar.
+
+        \code
+        tmath::vectorn<float,3> v1(0.0f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v2(1.0f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v3;
+        
+        // Scalar product
+        float skalar = v1 * v2;
+        
+        // Multiplication with a scalar
+        v3 = v1 * 1.0f;
+        
+        // Dito
+        v3 = 1.0f * v1;
+        \endcode
+
+        It is possible to divide a scalar. This is only an inverted multiplication.
+
+        \code
+        tmath::vectorn<float,3> v1(0.0f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v2;
+        
+        // Division with a scalar
+        v2 = v1 / 1.2f; // == v1 * (1.0f/1.2f)
+
+        \endcode
+        \section tutorial1ex Other functions
+        The length of a vector is calculated like this:
+
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        
+        // Calculates the length of the vector
+        float length =tmath::len(v1);
+        \endcode
+
+        To estimate the norm of a vector use the norm() function
+
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        
+        // Calculates the norm of a vector
+        float n = tmath::norm(v1);
+        \endcode        
+        
+        To normalize a vector use the normalize() function:
+
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        tmath::normalize(v1);
+        \endcode        
+        
+        The cross product of two vectors could calculated with the cross() function:
+
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v2(3.3f, 1.0f, 0.0f);
+        tmath::vectorn<float,3> v3;
+        
+        // Calclulates the cross product. (Only for vectorn<type, 3> )
+        v3 = tmath::cross(v1,v2);
+        \endcode        
+        
+        \section tutorial1zug Access to the components
+        There are two possible access methods. One is to use the \b .x \b .y ... variable names.
+
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        float x = v1.x;
+        float y = v1.y;
+        float z = v1.z;
+        \endcode
+
+        Second, you can use the vector itself as a pointer of an array. You can access the components with the \b [] operator.
+
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        float* v = v1;
+        float xcomp = v[0];
+        float ycomp = v[1];
+        float zcomp = v[2];
+        \endcode
+
+        Please keep in mind that the element access via the [] operator are not designed
+        for security checking. This means no border checks are done. 
+
+        \section tutorial1string String Output
+        You can use the std::cout method to print out the components of the vector.
+        
+        \code
+        tmath::vectorn<float,3> v1(3.3f, 1.0f, 0.0f);
+        std::cout << v << std::endl; 
+        \endcode
+        
+        \section tutorial1convert Conversion
+        You can convert between the vectorn<T,2>, vectorn<T,3>, vectorn<T,4> classes. If you want to change
+        a vectorn<T,3> into a vectorn<T,2> do as in the following code:
+        
+        \code
+        tmath::vectorn<float,3> v1(4.321f, 23.0f, 0.0021f);
+        tmath::vectorn<float,2> v2;
+        
+        // Converts v1 in v2
+        tmath::conv(v1,v2);
+        \endcode
+        
+        Or the other way around. You can convert a vectorn<T,2> into a vectorn<T,3>:
+        \code
+        tmath::vectorn<float,2> v1(4.321f, 23.0f);
+        tmath::vectorn<float,3> v2;
+        
+        // Converts v1 in v2.   v2=(4.321f, 23.0f, 0.0f)
+        tmath::conv(v1,v2); 
+        \endcode
+        
+        The added new component is filled with a null.
+
+*/
+
+/*!
+        \page tutorial2 The matrix classes
+        \section tutorial2def Definition
+        Here are different methods to create a matrix object:
+        \code
+        // Produces an zero filles matrix3
+        tmath::matrix<type,row, column> m1;     
+                
+        // Initiates the vectorn<T,3> with values                               
+        tmath::matrix<float,3,3> m2(0.0f, 1.0f, 25.65f, 0.0f, 1.0f, 0.0f, 1.0f, 2.0f, 3.0f);
+        
+        // Initiates the matrix3 by another matrix3
+        tmath::matrix<float,3,3> m3(v2);        
+        
+        // Initiates the matrix3 by an array of values
+        float values[9] = {0.0f, 1.0f, 25.65f, 0.0f, 1.0f, 0.0f, 1.0f, 2.0f, 3.0f};
+        tmath::matrix<float,3,3> m3(values);    
+                                        
+        \endcode
+        
+        \section tutorial2add Addition, Subtraction
+        A matrix can be added or subtracted like following example:
+
+        \code
+        tmath::matrix<float,3,3> m1;
+        tmath::matrix<float,3,3> m2;
+        tmath::matrix<float,3,3> m3;
+        
+        // Addition
+        m3 = m1 + m2;
+        m3 += m1;
+        
+        // Subtraction
+        m3 = m1 - m2;
+        m3 -= m1;
+        \endcode
+
+        \section tutorial2mul Multiplication and Division
+        Two matrices are multiplicated by row-column order.
+        
+        \code
+        tmath::matrix<float,3,3> m1;
+        tmath::matrix<float,3,3> m2;
+        tmath::matrix<float,3,3> m3;
+        
+        // Multiplication with a matrix
+        m3 = m1 * m2;
+        
+        // Multiplication with a scalar 
+        m2 = m1 * 1.0f;
+        
+        // Dito
+        m3 = 1.0f * m1;
+        \endcode        
+        
+        A matrix can be multiplicated with a vector, too. The resut is a vectorn<T,3>
+
+        \code
+        tmath::matrix<float,3,3>> m1;
+        tmath::vectorn<float,3> v1, res;
+
+        res = m1 * v1;  
+        \endcode        
+
+        \section tutorial3ex Other functions
+        To create a null or identity matrix use the null() and identity() function:
+        \code
+        tmath::matrix<float,3,3> m1,m2;
+        tmath::null(m1);
+        tmath::identity(m2);
+        \endcode
+        
+        To transpose a matrix use the transp() function
+        \code
+        tmath::matrix<float,3,3> m(0.0f, 1.0f, 25.65f, 0.0f, 1.0f, 0.0f, 1.0f, 2.0f, 3.0f), mres;
+        mres = tmath::transp(m);
+        \endcode
+        
+        If you need the inverse of the matrix use the inv() function:
+        \code
+        tmath::matrix<float,3,3> m(0.0f, 1.0f, 25.65f, 0.0f, 1.0f, 0.0f, 1.0f, 2.0f, 3.0f), mres;
+        mres = tmath::inv(m);
+        \endcode
+
+        To calculate the determinant of the matrix use the det() function:
+        \code
+        tmath::matrix<float,3,3> m(0.0f, 1.0f, 25.65f, 0.0f, 1.0f, 0.0f, 1.0f, 2.0f, 3.0f), mres;
+        mres = tmath::det(m);
+        \endcode
+        
+
+        \section tutorial2zug Access to the components
+        There are two possible access methods. One is to use the \b .xx \b .xy \b .xz ... variable names.
+
+        \code
+        tmath::matrix<float,3,3 m1;
+        float xx = m1.xx;
+        float xy = m1.xy;
+        float xz = m1.xz;
+        float yx = m1.yx;
+        float yy = m1.yy;
+        float yz = m1.yz;
+        ...
+        \endcode
+
+        Second, you can use the matrix itself as a pointer of an array. You can access the components with the \b [] operator.
+
+        \code
+        tmath::matrix<float,3,3> m1;
+        float* v = m1;
+        float xcomp = v[0]; // xx
+        float ycomp = v[1]; // xy
+        float zcomp = v[2]; // xz
+        ...
+        \endcode
+
+
+Please keep in mind that the element access via the [] operator are not designed
+        for security checking. This means no border checks are done. 
+
+        \section tutorial2string String Output
+        You can use the std::cout method to print out the components of the matrix.
+        \code
+        tmath::matrix<float,3,3> m1;
+        std::cout << m1 << std::endl; 
+        \endcode
+        
+        \section tutorial1convert Conversion
+        You can convert between a matrix<float,3,3> and matrix<float,4,4>.
+        \code
+        tmath::matrix3 m1(....);
+        tmath::matrix4 m2;
+        tmath::conv(m1,m2);
+        \endcode
+        Of course, you can convert it the other way around. The last row of the
+        matrix converted from a matrix<float,3,3>  is filled with (0.0f, 0.0f, 0.0f, 0.0f);
+*/
+
+
+
+
+/*!
+        \page tutorial3 The quaternion class
+        \section tutorial3def Definition
+        There are different types how a quaternion can be defined:
+        \code
+
+        tmath::quaternion<type> q1;                             // Produces an empty quaternion
+        tmath::quaternion<type> q2(0.0, 1.0f, 25.65, 1.0f);     // Initiates the quaternion with values
+        tmath::quaternion<type> q3(v2);                         // Initiates the quaternion by another quaternion
+        \endcode
+        
+        The identifier \b type can be \b float , \b double or an \b int. You should know that if you are using
+        \b int types you will get rounding errors because you are not working with real values.
+
+        \section tutorial3add Addition, Subtraction
+        A quaternion can be added or subtracted like following example:
+
+        \code
+        tmath::quaternion<float> q1(0.0f, 1.0f, 0.0f, 0.2f);
+        tmath::quaternion<float> q2(1.0f, 1.0f, 0.0f, 0.4f);
+        tmath::quaternion<float> q3;
+        
+        // Addition
+        q3 = q1 + q2;
+        q3 += q1;
+        
+        // Subtraction
+        q3 = q1 - q2;
+        q3 -= q1;
+        \endcode
+
+        \section tutorial3mul Multiplication and Division
+        Two quaternions can be multiplicated by each other. The result is another quaternion.
+
+        \code
+        tmath::quaternion<float> q1(0.0f, 1.0f, 0.0f, 0.3f);
+        tmath::quaternion<float> q2(1.0f, 1.0f, 0.0f, 7.54f);
+        tmath::quaternion<float> q3;
+
+        // Quaternion quaternion multiplication
+        q3 = q1 * q2;
+        
+        // multiplication with a scalar
+        q3 = q1 * 1.0f;
+        
+        // dito
+        q3 = 1.0f * q1;
+        \endcode
+
+        Or a division with a scalar:
+
+        \code
+        tmath::quaternion<float> q1(0.0f, 1.0f, 0.0f, 0.02f);
+        tmath::quaternion<float> q2;
+
+        // Division == q1 * (1.0f/1.2f)
+        q2 = q1 / 1.2f; 
+
+        \endcode
+        \section tutorial3ex Other functions
+        The length of a quaternion is calculated like this:
+
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 9.3f);
+        
+        // The length of a quaternion
+        float length =tmath::len(q1);
+        \endcode
+
+        To estimate the norm of a quaternion use the norm() function
+
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 2.0f);
+        
+        // The norm of a quaternion
+        float n = tmath::norm(q1);
+        \endcode        
+        
+        To normalize a vector use the normalize() function:
+
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 9.54f);
+        
+        // Normalizing a quaternion
+        tmath::normalize(q1);
+        \endcode        
+        
+        If you need the conjugated quaternion use the conj() function:
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 9.54f), qres;
+        
+        // Conjugate a quaternion
+        qres = tmath::conj(q1);
+        \endcode
+
+        Or if you need the inverse of the quaternion use the inv() function:
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 9.54f), qres;
+        
+        // Invert a quaternion
+        qres = tmath::inv(q1);
+        \endcode
+        
+        
+        \section tutorial3zug Access to the components
+        There are two possible access methods. One is to use the \b .x \b .y \b .z \b .w variable names.
+
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 74.2f);
+        float x = q1.x;
+        float y = q1.y;
+        float z = q1.z;
+        float w = q1.w;
+        \endcode
+
+        Or you can use the quaternion itself as a pointer of an array. Of course the type
+        of the array depends on the quaternion.
+
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 0.2f);
+        float* q = q1;
+        float xcomp = q[0];
+        float ycomp = q[1];
+        float zcomp = q[2];
+        float wcomp = q[3];
+        \endcode
+
+        Please keep in mind that the element access via the [] operator are not designed
+        for security checking. This means no border checks are done. 
+
+        \section tutorial1string String Output
+        You can use the std::cout method to print out the components of the vector.
+        \code
+        tmath::quaternion<float> q1(3.3f, 1.0f, 0.0f, 34.4f);
+        std::cout << q << std::endl; 
+        \endcode
+
+*/
+

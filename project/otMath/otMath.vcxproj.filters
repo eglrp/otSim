@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Splines">
+      <UniqueIdentifier>{0adc0f7f-ed80-4ca8-b84e-d4364fa14200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Splines">
+      <UniqueIdentifier>{dc7cfd92-03db-404b-a480-f1c653f7dba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tinymath">
+      <UniqueIdentifier>{9d3c5666-376a-45ff-abe1-bc44452fea35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\otMath\otMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otMath\Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\Splines\src\SplinesCinterface.h">
+      <Filter>Header Files\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\Splines\src\Splines_doxygen.hh">
+      <Filter>Header Files\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\Splines\src\Splines.hh">
+      <Filter>Header Files\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix2.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix3.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\matrix4.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\quaternion.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\tm.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\tmconfig.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tmg\tmg.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector2.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector3.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector4.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vectorn.h">
+      <Filter>Header Files\tinymath</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\include\otMath\Conversions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\otMath\Table.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineCubic.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineCubicBase.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineHermite.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineLinear.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinePchip.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineQuintic.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineQuinticBase.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\Splines.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinesBivariate.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinesCinterface.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineSet.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineSetGC.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplinesUnivariate.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineAkima.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineAkima2D.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBessel.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBiCubic.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBilinear.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBiQuintic.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineBSpline.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\Splines\src\SplineConstant.cc">
+      <Filter>Source Files\Splines</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

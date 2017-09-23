@@ -22,6 +22,7 @@ INCLUDES
 
 #include "otMain.h"
 
+#include "otMath.h"
 #include "ITime.h"
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

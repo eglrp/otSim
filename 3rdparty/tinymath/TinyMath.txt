@@ -1,0 +1,32 @@
+Introduction
+Welcome to the documentation of tinymath. One reason for the birth of tinymath was to develop a light, powerful and flexible mathematical library. The base of tinymath is realy small. Only the necessary functions are implemented. If you need more function than addition and multiplication you have to use another project that is based on tinymath. For instance, if you want to use geometrical functions for matrizes you can use the tinygeo.
+
+
+Features
+
+    * completely written as c++ template
+    * vector class
+    * matrix class
+    * quaternion class
+
+Installation
+
+The installation of tinymath is realy easy. As tinymath is completely written as a c++ template you don't have to compile anything at all. You should only copy the necessary files into your project that's all.
+
+Supported compiler
+At the moment the library works with this compilers
+
+    * Visual Studio 6/7/8
+    * Gnu/Gcc 3.3
+    * Digital Mars
+
+It would be very helpful if you can test it on other platforms and compiler. If you find bugs please tell me these so I can fix it.
+
+Extended library
+One of the goal was to keep tinymath as small as possible. So only standard linear algebraic operation are possible. If you need more functions like calculating the inverse of a matrix or the cross product of two vectors you should use the project TinyGeo. It it based on tinymath an extends it with real important mathematical functions.
+
+Important notes
+It is important to know that all access methods of the classes has no border verification. This means if you access member variables via [] operator you should be carefully. For example if you have a vector3<T> class an you access 4 values the result is undefined. The reason for not doing border checks is in respect to performance issues.
+
+
+Cengiz Terzibas cengiz@terzibas.de 
