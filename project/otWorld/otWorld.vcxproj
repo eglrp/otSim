@@ -51,9 +51,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WORLD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>GeographicLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>otSimWrapper_plugin.lib;otSim.lib;GeographicLib.lib;otMath.lib;otCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -63,14 +64,30 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WORLD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>GeographicLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>otSimWrapper_plugin.lib;otSim.lib;GeographicLib.lib;otMath.lib;otCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\otWorld\CelestialBody.h" />
+    <ClInclude Include="..\..\include\otWorld\CelestialBodyFactory.h" />
+    <ClInclude Include="..\..\include\otWorld\Ellipsoid.h" />
+    <ClInclude Include="..\..\include\otWorld\Geodetic2.h" />
+    <ClInclude Include="..\..\include\otWorld\Geodetic3.h" />
+    <ClInclude Include="..\..\include\otWorld\ICelestialBody.h" />
+    <ClInclude Include="..\..\include\otWorld\WorldConstants.h" />
+    <ClInclude Include="..\..\include\otWorld\WorldManager.h" />
+    <ClInclude Include="..\..\include\otWorld\WorldTypes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\otWorld\CelestialBody.cpp" />
+    <ClCompile Include="..\..\src\otWorld\CelestialBodyFactory.cpp" />
+    <ClCompile Include="..\..\src\otWorld\Ellipsoid.cpp" />
+    <ClCompile Include="..\..\src\otWorld\WorldManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

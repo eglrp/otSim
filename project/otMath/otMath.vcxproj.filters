@@ -75,6 +75,9 @@
     <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vectorn.h">
       <Filter>Header Files\tinymath</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\otMath\Conversions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\include\otMath\Conversions.cpp">

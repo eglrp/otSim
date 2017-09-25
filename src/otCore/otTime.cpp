@@ -63,10 +63,10 @@ void otTime::update()
 	//NOTE: OT does not yet support years, so fixed at 2017 for now
 	timeAcceleration = otsim::otSim::getInstance().getTimeAcceleration();
 	simTimeOfDay = otsim::otSim::getInstance().getTimeOfDay() / 1000.0;
-	int simDayOfYear = otsim::otSim::getInstance().getDayOfYear();
+	simDate.dayOfYear = otsim::otSim::getInstance().getDayOfYear();
 
 	int month, day;
-	TimeUtility::calculateMonthDayFromDayOfYear(simDayOfYear, simDate.year, month, day);
+	TimeUtility::calculateMonthDayFromDayOfYear(simDate.dayOfYear, simDate.year, month, day);
 	simDate.month = (unsigned int)month;
 	simDate.day = (unsigned int)day;
 
@@ -77,6 +77,8 @@ void otTime::update()
 	tmp -= simDate.minute*60.0;
 	simDate.second = (unsigned int)(tmp);
 	simDate.seconds = (float)tmp;
+
+	simJulianDate = TimeUtility::getJulianDateFromUTCTime(simDate);
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -117,9 +119,11 @@ void otTime::setSimDate(const Date& simDate_)
 		simDate.minute*60.0 +
 		simDate.seconds;
 
-	int dayOfYear = TimeUtility::calculateDayOfYear(simDate.year, simDate.month, simDate.day);
-	otsim::otSim::getInstance().setDayOfYear(dayOfYear);
+	simDate.dayOfYear = TimeUtility::calculateDayOfYear(simDate.year, simDate.month, simDate.day);
+	otsim::otSim::getInstance().setDayOfYear(simDate.dayOfYear);
 	otsim::otSim::getInstance().setTimeOfDay(simTimeOfDay);
+
+	simJulianDate = TimeUtility::getJulianDateFromUTCTime(simDate);
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -134,6 +138,13 @@ float otTime::getTimeAcceleration(void) const
 const Date& otTime::getSimDate(void) const
 {
 	return simDate;
+}
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+double otTime::getSimJulianDate(void) const
+{
+	return simJulianDate;
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,21 +213,35 @@ bool TimeUtility::isLeapYear(int year)
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+double TimeUtility::getJulianDateFromUTCTime(const Date& date)
+{
+	double y = 0;
+	double m = 0;
+	if (date.month <= 2) {
+		y = date.year - 1;
+		m = date.month + 12;
+	}
+	else {
+		y = date.year;
+		m = date.month;
+	}
+
+	double JD = (int)(365.25*y) + (int)(30.6001*(m + 1.0)) + (double)date.day + date.hour / 24.0 + date.minute / 1440.0 + date.seconds / 86400.0 + 1720981.5;
+
+	return JD;
+}
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 int TimeUtility::getNumberOfDaysInMonth(int year, int month)
 {
 	int days_in_month = 0;
 
-	bool is_a_leapyear = isLeapYear(year);
+	month = month < 1 ? 1 : month > 12 ? 12 : month;
+	int monthIndx = month - 1;
 
-	int monthIndx = (month < 1 ? 1 : month > 12 ? 12 : month) - 1;
-
-	if (month == 2) {
-		if (is_a_leapyear) {
-			days_in_month = daysInMonth[monthIndx] + 1;
-		}
-		else {
-			days_in_month = daysInMonth[monthIndx];
-		}
+	if (month == 2 && isLeapYear(year)) {
+		days_in_month = daysInMonth[monthIndx] + 1;
 	}
 	else {
 		days_in_month = daysInMonth[monthIndx];

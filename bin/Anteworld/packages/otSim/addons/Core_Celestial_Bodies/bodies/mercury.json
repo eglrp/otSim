@@ -1,0 +1,37 @@
+//Celestial Body
+{
+	"internalName" : "Mercury",
+	"GUID" : "{068F48E6-4E5A-42B5-B30C-CB4B84EE0F53}",
+	"objectType" : "CELESTIAL",
+	"name" : {
+		"displayName" : "Mercury",
+	},	
+	"centralBody" : "{ABDB465F-1357-4567-8E81-749C2E1BC86C}",		//Body GUID around which the celestial body orbits
+	"celestialType" : "Planet",				//Celestial body type: "Star", "Planet", "Moon", "Dwarf_Planet", "Asteroid", "Comet", or "Special_Point"
+	"physicalProperties" : {
+		"GM" : 2.203209E13,					//Gravitational parameter (m^3/s^2)
+		"J2" : 5.03E-05,					//Second zonal harmonic coefficient (derived dynamic form factor) (Default = 0)
+		"rateRotation" : 1.24001E-06,		//rad/s (Default = 0)
+		"semimajorRadius" : 2439700,		//Equatorial radius (m)
+		"semiminorRadius" : 2439700,		//Polar radius (m)  (Default = semimajorRadius)
+		"rotationAxis" : [0.0, 0.0, 1.0],	//Rotation axis (unit vector)
+		"geometricAlbedo" : 0.106,			//Fraction of solar energy reflected from the body
+	},	
+	"orbitalElements" : {
+		"ephemerisDate" : 2451545.0, 								//date for when orbital elements were defined
+		"semimajorAxis" : [0.38709927, 0.00000037],  				//[a0 (AU), a(dot) (AU/century)]
+		"eccentricity" : [0.20563593, 0.00001906], 					//[e0 () ,e(dot) (/century)]
+		"inclination" : [7.00497902, -0.00594749], 					//[I0 (deg), I(dot) (deg/century)]
+		"meanLongitude" : [252.25032350, 149472.67411175], 			//[L0 (deg), L(dot) (deg/century)]
+		"longitudeOfPeriapsis" : [77.45779628, 0.16047689], 		//[ω(bar)0 (deg), ω(bar-dot) (deg/century)]
+		"longitudeOfAscendingNode" : [48.33076593, -0.12534081], 	//[Ω0 (deg), Ω(dot) (deg/century)]
+		
+		//additional terms necessary for computation of the mean Anomaly (M) for some celestial bodies
+		"b" : 0.0,
+		"c" : 0.0,
+		"s" : 0.0, 
+		"f" : 0.0, 
+	},
+}
+
+

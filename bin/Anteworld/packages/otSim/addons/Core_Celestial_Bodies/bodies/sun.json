@@ -1,0 +1,21 @@
+//Celestial Body
+{
+	"internalName" : "Sun",
+	"GUID" : "{ABDB465F-1357-4567-8E81-749C2E1BC86C}",
+	"objectType" : "CELESTIAL",
+	"name" : {
+		"displayName" : "Sun",
+	},	
+	"celestialType" : "Star",				//Celestial body type: "Star", "Planet", "Moon", "Dwarf_Planet", "Asteroid", "Comet", or "Special_Point"
+	"physicalProperties" : {
+		"GM" : 1.3271244004193938E20,		//Gravitational parameter (m^3/s^2)
+		"J2" : 1.9E-07,						//Second zonal harmonic coefficient (derived dynamic form factor) (Default = 0)
+		"rateRotation" : 2.771420E-06,		//rad/s (Default = 0)
+		"semimajorRadius" : 695990000.0,	//Equatorial radius (m)
+		"semiminorRadius" : 695294010.0,	//Polar radius (m)  (Default = semimajorRadius)
+		"rotationAxis" : [0.0, 0.0, 1.0],	//Rotation axis (unit vector)
+		"solarConstant" : 1367.6,			//Solar radiation per area at 1 AU distance (W/m^2)
+	},
+}
+
+

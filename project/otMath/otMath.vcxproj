@@ -84,6 +84,7 @@
     <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector3.h" />
     <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vector4.h" />
     <ClInclude Include="..\..\3rdparty\tinymath\include\tm\vectorn.h" />
+    <ClInclude Include="..\..\include\otMath\Conversions.h" />
     <ClInclude Include="..\..\include\otMath\otMath.h" />
     <ClInclude Include="..\..\include\otMath\Table.h" />
   </ItemGroup>

@@ -57,7 +57,7 @@
       <PreprocessorDefinitions>MAIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>otCore.lib;otMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>otCore.lib;otMath.lib;otWorld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -72,7 +72,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>otCore.lib;otMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>otCore.lib;otMath.lib;otWorld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

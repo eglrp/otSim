@@ -103,11 +103,11 @@ public:
 
 
 	// Calculates the norm of a quaternion
-	inline T norm() {
+	inline T norm() const {
 		return (w*w + x*x + y*y + z*z);
 	}
 	// Calculates the length of a quaternion
-	inline T len() {
+	inline T len() const {
 		return static_cast<T>(sqrt(w*w + x*x + y*y + z*z));
 	}
 	// Normalize the quaternion (in place)
@@ -139,7 +139,7 @@ public:
 	}
 
 	// conjugate the quaternion
-	inline quaternion<T> conj() {
+	inline quaternion<T> conj() const {
 		tmath::quaternion<T> qres(this);
 		qres.x *= static_cast<T>(-1.0);
 		qres.y *= static_cast<T>(-1.0);
@@ -147,7 +147,7 @@ public:
 		return qres;
 	}
 	// invert the quaternion
-	inline quaternion<T> inv() {
+	inline quaternion<T> inv() const {
 		tmath::quaternion<T> qres(this);
 		T s = qres.len();
 		if (s > static_cast<T>(0.0)) {
@@ -159,15 +159,15 @@ public:
 	}
 
 
-	inline quaternion<T> conjugate() {
+	inline quaternion<T> conjugate() const {
 		return conj();
 	}
 
-	inline quaternion<T> inverse() {
+	inline quaternion<T> inverse() const {
 		return inv();
 	}
 
-	inline T magnitude() {
+	inline T magnitude() const {
 		return len();
 	}
 };

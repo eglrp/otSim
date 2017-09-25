@@ -26,6 +26,8 @@
  * - s and c prefixes mean sin and cos
  **********************************************************************/
 
+ // Source modified by Cory Parks 09/2017
+
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/GeodesicLine.hpp>
 
@@ -1908,5 +1910,224 @@ namespace GeographicLib {
     }
     // Post condition: o == sizeof(coeff) / sizeof(real) && k == nC4x_
   }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  void Geodesic::VincentyDirect(real lat1, real lon1, real& lat2, real& lon2, real s12, real azi1, real& azi2) const
+  {
+	  lat2 = 0.0;
+	  lon2 = 0.0;
+	  azi2 = 0.0;
+
+	  real phi1 = lat1 *  Math::degree();
+	  real lam1 = lon1 *  Math::degree();
+	  real alp1 = azi1 *  Math::degree();
+
+	  real salp1 = sin(alp1);
+	  real calp1 = cos(alp1);
+
+	  real tanU1 = (1.0 - _f) * tan(phi1);
+	  real cosU1 = 1.0 / sqrt((1.0 + tanU1*tanU1));
+	  real sinU1 = tanU1 * cosU1;
+	  real sig1 = atan2(tanU1, calp1);
+	  real salp = cosU1 * salp1;
+	  real cSqalp = 1.0 - salp*salp;
+	  real uSq = cSqalp * (_a*_a - _b*_b) / (_b*_b);
+	  real A = 1.0 + uSq / 16384.0 * (4096.0 + uSq * (-768.0 + uSq * (320.0 - 175.0 * uSq)));
+	  real B = uSq / 1024.0 * (256.0 + uSq * (-128.0 + uSq * (74.0 - 47.0 * uSq)));
+
+	  real sig = s12 / (_b * A);
+	  real sigPrime;
+	  real c2sigM;
+	  real ssig;
+	  real csig;
+	  do {
+		  c2sigM = cos(2 * sig1 + sig);
+		  ssig = sin(sig);
+		  csig = cos(sig);
+		  real dsig = B * ssig * (c2sigM + B / 4.0 * (csig * (-1.0 + 2.0 * c2sigM*c2sigM) -
+			  B / 6.0 * c2sigM * (-3.0 + 4.0 * ssig*ssig) * (-3.0 + 4.0 * c2sigM*c2sigM)));
+		  sigPrime = sig;
+		  sig = s12 / (_b*A) + dsig;
+	  } while (abs(sig - sigPrime) > 1e-12);
+
+	  real tmp = sinU1*ssig - cosU1 * csig * calp1;
+	  real phi2 = atan2(sinU1 * csig + cosU1 * ssig * calp1, (1.0 - _f) * sqrt(salp*salp + tmp*tmp));
+	  real lam = atan2(ssig * salp1, cosU1 * csig - sinU1 * ssig * calp1);
+	  real C = _f / 16.0 * cSqalp * (4.0 + _f * (4.0 - 3.0 * cSqalp));
+	  real lam12 = lam - (1.0 - C) * _f * salp * (sig + C * ssig * (c2sigM + C * csig * (-1.0 + 2.0 * c2sigM*c2sigM)));
+	  real lam2 = fmod((lam1 + lam12 + 3.0 * Math::pi()), (2.0 * Math::pi())) - Math::pi();  // normalise to -180...+180
+
+	  real alp2 = atan2(salp, -tmp);
+
+	  lat2 = phi2 /  Math::degree();
+	  lon2 = lam2 /  Math::degree();
+	  azi2 = alp2 /  Math::degree();
+  }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  void Geodesic::HaversineDirect(real lat1, real lon1, real& lat2, real& lon2, real s12, real azi1, real& azi2) const
+  {
+	  //approximate mean radius
+	  real meanRadius = _a * (1.0 - (1.0 / 3.0) * _f);
+
+	  real phi1 = lat1 * Math::degree();
+	  real lam1 = lon1 * Math::degree();
+
+	  real cphi1 = cos(phi1);
+	  real sphi1 = sin(phi1);
+
+	  real alp1 = azi1 * Math::degree();
+
+	  real phi2 = asin(sphi1 * cos(s12 / meanRadius) + cphi1 * sin(s12 / meanRadius) * cos(alp1));
+	  real lam2 = lam1 + atan2(sin(alp1) * sin(s12 / meanRadius) * cphi1, cos(s12 / meanRadius) - sphi1 * sin(phi2));
+
+	  lat2 = phi2 / Math::degree();
+	  lon2 = lam2 / Math::degree();
+	  //azi2 = ???
+  }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  void Geodesic::VincentyInverse(real lat1, real lon1, real lat2, real lon2, real& s12, real& azi1, real& azi2) const
+  {
+	  s12 = 0.0;
+	  azi1 = 0.0;
+	  azi2 = 0.0;
+
+	  real phi1 =  Math::degree() * lat1;
+	  real phi2 =  Math::degree() * lat2;
+	  real lam12 = Math::degree() * (lon2 - lon1);
+
+	  real tanU1 = (1.0 - _f) * tan(phi1);
+	  real cosU1 = 1.0 / sqrt((1.0 + tanU1*tanU1));
+	  real sinU1 = tanU1 * cosU1;
+	  real tanU2 = (1.0 - _f) * tan(phi2);
+	  real cosU2 = 1.0 / sqrt((1.0 + tanU2*tanU2));
+	  real sinU2 = tanU2 * cosU2;
+
+	  real lam = lam12;
+	  real lamPrime;
+	  real slam;
+	  real clam;
+	  real sig;
+	  real ssig;
+	  real csig;
+	  real cSqalp;
+	  real c2sigM;
+	  real iterationLimit = 100;
+	  do {
+		  slam = sin(lam);
+		  clam = cos(lam);
+		  real sSqsig = (cosU2 * slam) * (cosU2 * slam) + (cosU1 * sinU2 - sinU1 * cosU2 * clam) * (cosU1 * sinU2 - sinU1 * cosU2 * clam);
+		  ssig = sqrt(sSqsig);
+		  if (ssig == 0) return;  // co-incident points
+		  csig = sinU1 * sinU2 + cosU1 * cosU2 * clam;
+		  sig = atan2(ssig, csig);
+		  real salp = cosU1 * cosU2 * slam / ssig;
+		  cSqalp = 1.0 - salp*salp;
+		  c2sigM = csig - 2.0 * sinU1 * sinU2 / cSqalp;
+		  if (isnan(c2sigM)) c2sigM = 0;  // equatorial line: cSqalp=0 (§6)
+		  real C = _f / 16.0 * cSqalp * (4.0 + _f * (4.0 - 3.0 * cSqalp));
+		  lamPrime = lam;
+		  lam = lam12 + (1.0 - C) * _f * salp * (sig + C * ssig * (c2sigM + C * csig * (-1.0 + 2.0 * c2sigM*c2sigM)));
+	  } while (abs(lam - lamPrime) > 1E-12 && --iterationLimit>0);
+	  //if (iterationLimit==0) throw new Error('Formula failed to converge');
+
+	  real uSq = cSqalp * (_a*_a - _b*_b) / (_b*_b);
+	  real A = 1.0 + uSq / 16384.0 * (4096.0 + uSq * (-768.0 + uSq * (320.0 - 175.0 * uSq)));
+	  real B = uSq / 1024.0 * (256.0 + uSq * (-128.0 + uSq * (74.0 - 47.0 * uSq)));
+	  real dsig = B * ssig * (c2sigM + B / 4.0 * (csig * (-1.0 + 2.0 * c2sigM*c2sigM) -
+		  B / 6.0 * c2sigM * (-3.0 + 4.0 * ssig * ssig) * (-3.0 + 4.0 * c2sigM*c2sigM)));
+
+	  s12 = _b*A*(sig - dsig);
+
+	  azi1 = (atan2(cosU2*slam, cosU1*sinU2 - sinU1*cosU2*clam)) / Math::degree();
+	  azi2 = (atan2(cosU1*slam, -sinU1*cosU2 + cosU1*sinU2*clam)) / Math::degree();
+  }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  void Geodesic::HaversineInverse(real lat1, real lon1, real lat2, real lon2, real& s12, real& azi1, real& azi2) const
+  {
+	  //approximate mean radius
+	  real meanRadius = _a * (1.0 - (1.0 / 3.0) * _f);
+
+	  real phi1 = lat1 * Math::degree();
+	  real phi2 = lat2 * Math::degree();
+	  real lat12 = (lat2 - lat1);
+	  real lon12 = (lon2 - lon1);
+
+	  real phi12 = lat12 * Math::degree();
+	  real lam12 = lon12 * Math::degree();
+
+	  real sin_phi12_over_2 = sin(phi12 / 2.0);
+	  real sin_lam12_over_2 = sin(lam12 / 2.0);
+
+	  real cphi1 = cos(phi1);
+	  real cphi2 = cos(phi2);
+
+	  real a = (sin_phi12_over_2*sin_phi12_over_2) + (cphi1*cphi2) * (sin_lam12_over_2*sin_lam12_over_2);
+	  real c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
+
+	  real y = sin(lam12)*cphi2;
+	  real x = cphi1*sin(phi2) - sin(phi1)*cphi2*cos(lam12);
+
+	  s12 = meanRadius * c;
+	  azi1 = atan2(y, x) / Math::degree();
+  }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  void Geodesic::EquirectangularInverse(real lat1, real lon1, real lat2, real lon2, real& s12, real& azi1, real& azi2) const
+  {
+	  //approximate mean radius
+	  real meanRadius = _a * (1.0 - (1.0 / 3.0) * _f);
+
+	  real phi1 =  Math::degree() * lat1;
+	  real phi2 =  Math::degree() * lat2;
+	  real lam12 = Math::degree() * (Math::AngDiff(Math::AngNormalize(lon1), Math::AngNormalize(lon2)));
+
+	  real xE = lam12 * cos((phi1 + phi2) / 2.0);
+	  real yE = (phi2 - phi1);
+
+	  real cphi2 = cos(phi2);
+
+	  real y = sin(lam12)*cphi2;
+	  real x = cos(phi1)*sin(phi2) - sin(phi1)*cphi2*cos(lam12);
+
+	  s12 = sqrt(xE*xE + yE*yE) * meanRadius;
+	  azi1 = atan2(y, x) / Math::degree();
+
+	  //real theta1 = PI/2.0 - phi1;
+	  //real theta2 = PI/2.0 - phi2;
+	  //s12 = meanRadius * sqrt(theta1*theta1 + theta2*theta2 - 2.0 * theta1 * theta2 * cos(lam12));
+  }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  void Geodesic::LawOfCosinesInverse(real lat1, real lon1, real lat2, real lon2, real& s12, real& azi1, real& azi2) const
+  {
+	  //approximate mean radius
+	  real meanRadius = _a * (1.0 - (1.0 / 3.0) * _f);
+
+	  real phi1 =  Math::degree() * lat1;
+	  real phi2 =  Math::degree() * lat2;
+	  real lam12 = Math::degree() * (Math::AngDiff(Math::AngNormalize(lon1), Math::AngNormalize(lon2)));
+
+	  real sphi1 = sin(phi1);
+	  real sphi2 = sin(phi2);
+	  real cphi1 = cos(phi1);
+	  real cphi2 = cos(phi2);
+
+	  real y = sin(lam12)*cphi2;
+	  real x = cphi1*sphi2 - sphi1*cphi2*cos(lam12);
+
+	  s12 = acos(sphi1*sphi2 + cphi1*cphi2 * cos(lam12)) * meanRadius;
+	  azi1 = atan2(y, x) / Math::degree();
+
+  }
+
 
 } // namespace GeographicLib

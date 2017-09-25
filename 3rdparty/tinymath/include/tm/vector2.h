@@ -123,11 +123,11 @@ public:
 	}
 
 	// Calculate the normal
-	inline T norm() {
+	inline T norm() const {
 		return static_cast<T>(x*x + y*y);
 	}
 	// Calculate the length
-	inline T len() {
+	inline T len() const {
 		return static_cast<T>(sqrt(x*x + y*y));
 	}
 
@@ -136,15 +136,15 @@ public:
 		T length = len();
 		if (length > 0) {
 			T value = static_cast<T>(1.0) / length;
-			v.x *= value; v.y *= value;
+			x *= value; y *= value;
 		}
 		return *this;
 	}
 
 	// Return a Normalized copy of the vector
 	inline const vectorn<T, 2> normalized() const {
-		vectorn<T, 2> v(this);
-		return normalize(v);
+		vectorn<T, 2> v(*this);
+		return v.normalize();
 	}
 	inline T distance(const vectorn<T, 2>& v) const {
 		return ((*this - v).len());
@@ -154,16 +154,21 @@ public:
 		return ((*this - v).norm());
 	}
 
-	inline T magnitude2() {
+	inline T magnitude2() const {
 		return norm();
 	}
 
-	inline T magnitude() {
+	inline T magnitude() const {
 		return len();
 	}
 
 	inline const vectorn<T, 2> unitVector() const {
 		return normalized();
+	}
+
+	/// Checks the vector and returns true if it is null (all zeros)
+	inline bool isNull() const {
+		return (x == 0 && y == 0);
 	}
 
 	inline T angleBetween(const vectorn<T, 2>& v) const {

@@ -179,14 +179,14 @@ public:
 	}
 
 	// Calculate the normal
-	inline T norm() {
+	inline T norm() const {
 		T res = static_cast<T>(0.0);
 		for (int idx = 0; idx < NUM; ++idx)
 			res += cmp[idx] * cmp[idx];
 		return res;
 	}
 	// Calculate the length
-	inline T len() {
+	inline T len() const {
 		T res = static_cast<T>(0.0);
 		for (int idx = 0; idx < NUM; ++idx)
 			res += cmp[idx] * cmp[idx];
@@ -207,16 +207,27 @@ public:
 
 	// Return a Normalized copy of the vector
 	inline const vectorn<T, NUM> normalized() const {
-		vectorn<T, NUM> v(this);
+		vectorn<T, NUM> v(*this);
 		return normalize(v);
 	}
 
-	inline T magnitude2() {
+	inline T magnitude2() const {
 		return norm();
 	}
 
-	inline T magnitude() {
+	inline T magnitude() const {
 		return len();
+	}
+
+	/// Checks the vector and returns true if it is null (all zeros)
+	inline bool isNull() const {
+		bool allNull = true;
+		for (int idx = 0; idx < NUM; ++idx) {
+			if (cmp[idx] != 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	inline const vectorn<T, NUM> unitVector() const {

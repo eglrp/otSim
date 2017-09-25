@@ -62,6 +62,7 @@ public:
 	//double getSimTime(void) const;
 	double getSimTimeOfDay(void) const;
 	const Date& getSimDate(void) const;
+	double getSimJulianDate(void) const;
 	const Date& getRealDate(void);
 
 	/////////////////////
@@ -78,6 +79,7 @@ private:
 
 	float timeAcceleration = 1.f;
 	double simTimeOfDay = 0;
+	double simJulianDate = 0;
 	Date realLocalDate;
 	Date simDate;
 };

@@ -1,0 +1,37 @@
+//Celestial Body
+{
+	"internalName" : "Venus",
+	"GUID" : "{E0A60978-0B94-4DE1-8F86-D23A5ED8C1D2}",
+	"objectType" : "CELESTIAL",
+	"name" : {
+		"displayName" : "Venus",
+	},	
+	"centralBody" : "{ABDB465F-1357-4567-8E81-749C2E1BC86C}",		//Body GUID around which the celestial body orbits
+	"celestialType" : "Planet",				//Celestial body type: "Star", "Planet", "Moon", "Dwarf_Planet", "Asteroid", "Comet", or "Special_Point"
+	"physicalProperties" : {
+		"GM" : 3.2485863E14,				//Gravitational parameter (m^3/s^2)
+		"J2" : 4.458E-06,					//Second zonal harmonic coefficient (derived dynamic form factor) (Default = 0)
+		"rateRotation" : -2.992449E-07,		//rad/s (Default = 0)
+		"semimajorRadius" : 6051893,		//Equatorial radius (m)
+		"semiminorRadius" : 6051893,		//Polar radius (m)  (Default = semimajorRadius)
+		"rotationAxis" : [0.0, 0.0, 1.0],	//Rotation axis (unit vector)
+		"geometricAlbedo" : 0.65,			//Fraction of solar energy reflected from the body
+	},	
+	"orbitalElements" : {
+		"ephemerisDate" : 2451545.0, 								//date for when orbital elements were defined
+		"semimajorAxis" : [0.72333566, 0.00000390],  				//[a0 (AU), a(dot) (AU/century)]
+		"eccentricity" : [0.00677672, -0.00004107], 				//[e0 () ,e(dot) (/century)]
+		"inclination" : [3.39467605, -0.00078890], 					//[I0 (deg), I(dot) (deg/century)]
+		"meanLongitude" : [181.97909950, 58517.81538729], 			//[L0 (deg), L(dot) (deg/century)]
+		"longitudeOfPeriapsis" : [131.60246718, 0.00268329], 		//[ω(bar)0 (deg), ω(bar-dot) (deg/century)]
+		"longitudeOfAscendingNode" : [76.67984255, -0.27769418], 	//[Ω0 (deg), Ω(dot) (deg/century)]
+		
+		//additional terms necessary for computation of the mean Anomaly (M) for some celestial bodies
+		"b" : 0.0,
+		"c" : 0.0,
+		"s" : 0.0, 
+		"f" : 0.0, 
+	},
+}
+
+

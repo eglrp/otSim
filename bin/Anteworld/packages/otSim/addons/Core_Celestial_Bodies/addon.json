@@ -1,0 +1,20 @@
+// Addon Configuration
+{
+	"addon_name" : "Core Celestial Bodies",
+	"author" : "Cory Parks",
+	"version" : "0.0.0.1",
+	"description" : "Models our solar system with the sun, the planets, and the icy dwarf planet of Pluto.",
+		
+	"objects" : [    //paths where individual object .json files are stored.
+		"bodies/sun.json",
+		"bodies/mercury.json",
+		"bodies/venus.json",
+		"bodies/earth.json",
+		"bodies/mars.json",
+		"bodies/jupiter.json",
+		"bodies/saturn.json",
+		"bodies/uranus.json",
+		"bodies/neptune.json",
+		"bodies/pluto.json",
+	]
+}

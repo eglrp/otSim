@@ -104,6 +104,10 @@ public:
 	///includes the Year, Month, Day, Hour, Minute, and Second.
 	virtual const Date& getSimDate(void) const = 0;
 
+	///Returns the Julian date representing the number of days since noon
+	///Universal Time on January 1, 4713 BC
+	virtual double getSimJulianDate(void) const = 0;
+
 	/////Returns the current real world date (not simulated) in the FSDate structure,
 	/////which includes the Year, Month, Day, Hour, Minute, and Second.
 	virtual const Date& getRealDate(void) = 0;
@@ -166,6 +170,9 @@ public:
 
 	///Returns boolean of given year being a leap year
 	static bool isLeapYear(int year);
+
+	///Computes the Julian date from the given UTC time
+	static double getJulianDateFromUTCTime(const Date& date);
 
 };
 

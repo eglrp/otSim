@@ -1,0 +1,36 @@
+//Celestial Body
+{
+	"internalName" : "Pluto",
+	"GUID" : "{A068ADF6-6B5B-45B4-BF12-018ECE677030}",
+	"objectType" : "CELESTIAL",
+	"name" : {
+		"displayName" : "Pluto",
+	},	
+	"centralBody" : "{ABDB465F-1357-4567-8E81-749C2E1BC86C}",		//Body GUID around which the celestial body orbits
+	"celestialType" : "Dwarf_Planet",		//Celestial body type: "Star", "Planet", "Moon", "Dwarf_Planet", "Asteroid", "Comet", or "Special_Point"
+	"physicalProperties" : {
+		"GM" : 8.724E11,					//Gravitational parameter (m^3/s^2)
+		"rateRotation" : -1.138559E-05,		//rad/s (Default = 0)
+		"semimajorRadius" : 1186000,		//Equatorial radius (m)
+		"semiminorRadius" : 1186000,		//Polar radius (m)  (Default = semimajorRadius)
+		"rotationAxis" : [0.0, 0.0, 1.0],	//Rotation axis (unit vector)
+		"geometricAlbedo" : 0.3,			//Fraction of solar energy reflected from the body
+	},
+	"orbitalElements" : {
+		"ephemerisDate" : 2451545.0, 								//date for when orbital elements were defined
+		"semimajorAxis" : [39.48211675, -0.00031596],  				//[a0 (AU), a(dot) (AU/century)]
+		"eccentricity" : [0.24882730, 0.00005170], 					//[e0 () ,e(dot) (/century)]
+		"inclination" : [17.14001206, 0.00004818], 					//[I0 (deg), I(dot) (deg/century)]
+		"meanLongitude" : [238.92903833, 145.20780515], 			//[L0 (deg), L(dot) (deg/century)]
+		"longitudeOfPeriapsis" : [224.06891629, -0.04062942], 		//[ω(bar)0 (deg), ω(bar-dot) (deg/century)]
+		"longitudeOfAscendingNode" : [110.30393684, -0.01183482], 	//[Ω0 (deg), Ω(dot) (deg/century)]
+		
+		//additional terms necessary for computation of the mean Anomaly (M) for some celestial bodies
+		"b" : 0.0,
+		"c" : 0.0,
+		"s" : 0.0, 
+		"f" : 0.0, 
+	},
+}
+
+

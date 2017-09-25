@@ -1,0 +1,38 @@
+//Celestial Body
+{
+	"internalName" : "Mars",
+	"GUID" : "{775AEB59-1662-46DB-BCF2-8FD1FA83F917}",
+	"objectType" : "CELESTIAL",
+	"name" : {
+		"displayName" : "Mars",
+	},	
+	"centralBody" : "{ABDB465F-1357-4567-8E81-749C2E1BC86C}",		//Body GUID around which the celestial body orbits
+	"celestialType" : "Planet",				//Celestial body type: "Star", "Planet", "Moon", "Dwarf_Planet", "Asteroid", "Comet", or "Special_Point"
+	"atmosphere" : "Mars",					//atmosphere type: "No_Atmosphere", "US_Standard", or "Mars"
+	"physicalProperties" : {
+		"GM" : 4.2828314258067E13,			//Gravitational parameter (m^3/s^2)
+		"J2" : 1.96045E-03,					//Second zonal harmonic coefficient (derived dynamic form factor) (Default = 0)
+		"rateRotation" : 7.088219E-5,		//rad/s (Default = 0)
+		"semimajorRadius" : 3396200.0,		//Equatorial radius (m)
+		"semiminorRadius" : 3376200.0,		//Polar radius (m)  (Default = semimajorRadius)
+		"rotationAxis" : [0.0, 0.0, 1.0],	//Rotation axis (unit vector)
+		"geometricAlbedo" : 0.150,			//Fraction of solar energy reflected from the body
+	},
+	"orbitalElements" : {
+		"ephemerisDate" : 2451545.0, 								//date for when orbital elements were defined
+		"semimajorAxis" : [1.52371034, 0.00001847],  				//[a0 (AU), a(dot) (AU/century)]
+		"eccentricity" : [0.09339410, 0.00007882], 					//[e0 () ,e(dot) (/century)]
+		"inclination" : [1.84969142, -0.00813131], 					//[I0 (deg), I(dot) (deg/century)]
+		"meanLongitude" : [-4.55343205, 19140.30268499], 			//[L0 (deg), L(dot) (deg/century)]
+		"longitudeOfPeriapsis" : [-23.94362959, 0.44441088], 		//[ω(bar)0 (deg), ω(bar-dot) (deg/century)]
+		"longitudeOfAscendingNode" : [49.55953891, -0.29257343], 	//[Ω0 (deg), Ω(dot) (deg/century)]
+		
+		//additional terms necessary for computation of the mean Anomaly (M) for some celestial bodies
+		"b" : 0.0,
+		"c" : 0.0,
+		"s" : 0.0, 
+		"f" : 0.0, 
+	},
+}
+
+

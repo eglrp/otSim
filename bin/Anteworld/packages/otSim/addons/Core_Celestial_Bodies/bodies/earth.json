@@ -1,0 +1,177 @@
+//Celestial Body
+{
+	"internalName" : "Earth",
+	"GUID" : "{1266EAAD-B471-438F-84DF-9A10C1259E4E}",
+	"objectType" : "CELESTIAL",
+	"name" : {
+		"displayName" : "Earth",
+	},
+	"centralBody" : "{ABDB465F-1357-4567-8E81-749C2E1BC86C}",		//Body GUID around which the celestial body orbits
+	"celestialType" : "Planet",				//Celestial body type: "Star", "Planet", "Moon", "Dwarf_Planet", "Asteroid", "Comet", or "Special_Point"
+	"atmosphere" : "US_Standard",			//Atmosphere type: "No_Atmosphere", "US_Standard", or "Mars"
+	"magneticModel" : "wmm2015",			//Magnetic model: "None", "wmm2010", "wmm2015", "igrf11", "igrf12", "emm2010", "emm2015", "emm2017"
+	"geoidModel" : "egm96-5",				//Geoid model: "None", "egm96-5", "egm96-15", "egm2008-1", "egm2008-2_5", "egm2008-5", "egm84-15", or "egm84-30"
+	"gravityModel" : "egm96",				//Gravity model : "Simple", "Ellipsoid", "egm96", "egm2008", or "egm84"
+	"physicalProperties" : {
+		"GM" : 3.986004415E14,				//Gravitational parameter (m^3/s^2)
+		"J2" : 1.08262982E-03,				//Second zonal harmonic coefficient (derived dynamic form factor) (Default = 0)
+		"rateRotation" : 7.292115E-05,		//rad/s (Default = 0)
+		"semimajorRadius" : 6378136.3,		//Equatorial radius (m)
+		"inverseFlattening" : 298.257223563,//Inverse Flattening (1/f)
+		"rotationAxis" : [0.0, 0.0, 1.0],	//Rotation axis (unit vector)
+		"geometricAlbedo" : 0.367,			//Fraction of solar energy reflected from the body
+	},
+	"orbitalElements" : {
+		"ephemerisDate" : 2451545.0, 								//date for when orbital elements were defined
+		"semimajorAxis" : [1.00000261, 0.00000562],  				//[a0 (AU), a(dot) (AU/century)]
+		"eccentricity" : [0.01671123, -0.00004392], 				//[e0 () ,e(dot) (/century)]
+		"inclination" : [-0.00001531, -0.01294668], 				//[I0 (deg), I(dot) (deg/century)]
+		"meanLongitude" : [100.46457166, 35999.37244981], 			//[L0 (deg), L(dot) (deg/century)]
+		"longitudeOfPeriapsis" : [102.93768193, 0.32327364], 		//[ω(bar)0 (deg), ω(bar-dot) (deg/century)]
+		"longitudeOfAscendingNode" : [0.0, 0.0], 					//[Ω0 (deg), Ω(dot) (deg/century)]
+		
+		//additional terms necessary for computation of the mean Anomaly (M) for some celestial bodies
+		"b" : 0.0,
+		"c" : 0.0,
+		"s" : 0.0, 
+		"f" : 0.0, 
+	},
+	"internalGravityFactorTable" : {
+		"radiusFraction" : [
+							0.0000000,
+							0.0156961,
+							0.0313922,
+							0.0470884,
+							0.0627845,
+							0.0784806,
+							0.0941767,
+							0.1098729,
+							0.1255690,
+							0.1412651,
+							0.1569612,
+							0.1726574,
+							0.1916497,
+							0.2040496,
+							0.2197457,
+							0.2354418,
+							0.2511380,
+							0.2668341,
+							0.2825302,
+							0.2982263,
+							0.3139225,
+							0.3296186,
+							0.3453147,
+							0.3610108,
+							0.3767070,
+							0.3924031,
+							0.4080992,
+							0.4237953,
+							0.4394914,
+							0.4551876,
+							0.4708837,
+							0.4865798,
+							0.5022759,
+							0.5179721,
+							0.5462251,
+							0.5493643,
+							0.5650604,
+							0.5807566,
+							0.5964527,
+							0.6121488,
+							0.6278449,
+							0.6435410,
+							0.6592372,
+							0.6749333,
+							0.6906294,
+							0.7063255,
+							0.7220217,
+							0.7377178,
+							0.7534139,
+							0.7691100,
+							0.7848062,
+							0.8005023,
+							0.8161984,
+							0.8318945,
+							0.8475906,
+							0.8632868,
+							0.8869879,
+							0.8946790,
+							0.9103751,
+							0.9260713,
+							0.9417674,
+							0.9574635,
+							0.9731596,
+							0.9952912,
+							1.0000000		
+							],
+		"gravityFraction" : [
+							0.0000000,
+							0.0381146,
+							0.0761047,
+							0.1139880,
+							0.1517646,
+							0.1894344,
+							0.2269974,
+							0.2644537,
+							0.3018032,
+							0.3390460,
+							0.3761820,
+							0.4132112,
+							0.4579000,
+							0.4830555,
+							0.5146614,
+							0.5460377,
+							0.5771211,
+							0.6078663,
+							0.6382404,
+							0.6682187,
+							0.6977827,
+							0.7269181,
+							0.7556138,
+							0.7838611,
+							0.8116530,
+							0.8389840,
+							0.8658494,
+							0.8922455,
+							0.9181694,
+							0.9436183,
+							0.9685904,
+							0.9930836,
+							1.0170966,
+							1.0406279,
+							1.0824571,
+							1.0798418,
+							1.0677200,
+							1.0573586,
+							1.0485480,
+							1.0411052,
+							1.0348700,
+							1.0297012,
+							1.0254745,
+							1.0220796,
+							1.0194188,
+							1.0174050,
+							1.0159605,
+							1.0150159,
+							1.0145088,
+							1.0143832,
+							1.0145885,
+							1.0150791,
+							1.0158139,
+							1.0167553,
+							1.0178695,
+							1.0191254,
+							1.0218457,
+							1.0224209,
+							1.0228322,
+							1.0226351,
+							1.0218297,
+							1.0204161,
+							1.0183945,
+							1.0148583,
+							1.0000000
+							],
+	},
+}
+
+

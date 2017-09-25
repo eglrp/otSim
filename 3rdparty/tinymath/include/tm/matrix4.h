@@ -20,6 +20,8 @@
   Cengiz Terzibas         cengiz@terzibas.de
 */
 
+//Source modified by Cory Parks 09/2017
+
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
@@ -85,6 +87,29 @@ public:
 		zx = m.zx;	zy =	m.zy; zz =	m.zz;	zw = static_cast<T>(0.0);
 		wx = static_cast<T>(0.0);		wy = static_cast<T>(0.0); 	wz = static_cast<T>(0.0); 	ww = static_cast<T>(1.0);
 	}
+	/// Converts a quaternion into a matrix4x4<T>
+	matrix<T, 4, 4>(const tmath::quaternion<T>& q) {
+		xx = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.y * q.y + q.z * q.z);
+		xy = static_cast<T>(2.0) * (q.x * q.y - q.z * q.w);
+		xz = static_cast<T>(2.0) * (q.x * q.z + q.y * q.w);
+		xw = static_cast<T>(0.0);
+
+		yx = static_cast<T>(2.0) * (q.x * q.y + q.z * q.w);
+		yy = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.x * q.x + q.z * q.z);
+		yz = static_cast<T>(2.0) * (q.z * q.y - q.x * q.w);
+		yw = static_cast<T>(0.0);
+
+		zx = static_cast<T>(2.0) * (q.x * q.z - q.y * q.w);
+		zy = static_cast<T>(2.0) * (q.y * q.z + q.x * q.w);
+		zz = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.x * q.x + q.y * q.y);
+		zw = static_cast<T>(0.0);
+
+		wx = static_cast<T>(0.0);
+		wy = static_cast<T>(0.0);
+		wz = static_cast<T>(0.0);
+		ww = static_cast<T>(1.0);
+	}
+
 	// assignment operations
 	inline matrix<T,4,4> operator+=(const matrix<T,4,4>& m) {
 		xx += m.xx; xy += m.xy; xz += m.xz; xw += m.xw;
@@ -231,6 +256,85 @@ public:
 	}
 	operator const T*() const {
 		return &xx;
+	}
+
+	/// Transpose the matrix<T,4,4>
+	const matrix<T, 4, 4> transp() const {
+		return matrix<T, 4, 4>(xx, yx, zx, wx,
+										xy, yy, zy, wy,
+										xz, yz, zz, wz,
+										xw, yw, zw, ww);
+	}
+
+	/// Transpose the matrix<T,4,4>
+	const matrix<T, 4, 4> transpose() const {
+		return transp();
+	}
+
+	/// Make a null matrix<T,4,4>
+	inline void null() {
+		xx = static_cast<T>(0.0); xy = static_cast<T>(0.0); xz = static_cast<T>(0.0); xw = static_cast<T>(0.0);
+		yx = static_cast<T>(0.0); yy = static_cast<T>(0.0); yz = static_cast<T>(0.0); yw = static_cast<T>(0.0);
+		zx = static_cast<T>(0.0); zy = static_cast<T>(0.0); zz = static_cast<T>(0.0); zw = static_cast<T>(0.0);
+		wx = static_cast<T>(0.0); wy = static_cast<T>(0.0); wz = static_cast<T>(0.0); ww = static_cast<T>(0.0);
+	}
+
+	/// Make a identity matrix<T,4,4>
+	inline void identity() {
+		xx = static_cast<T>(1.0); xy = static_cast<T>(0.0); xz = static_cast<T>(0.0); xw = static_cast<T>(0.0);
+		yx = static_cast<T>(0.0); yy = static_cast<T>(1.0); yz = static_cast<T>(0.0); yw = static_cast<T>(0.0);
+		zx = static_cast<T>(0.0); zy = static_cast<T>(0.0); zz = static_cast<T>(1.0); zw = static_cast<T>(0.0);
+		wx = static_cast<T>(0.0); wy = static_cast<T>(0.0); wz = static_cast<T>(0.0); ww = static_cast<T>(1.0);
+	}
+
+	/// Calculates the determinant of a matrix<T,4,4>
+	T det() const {
+		T det;
+		det =  this->[0] * this->[5] * this->[10];
+		det += this->[4] * this->[9] * this->[2];
+		det += this->[8] * this->[1] * this->[6];
+		det -= this->[8] * this->[5] * this->[2];
+		det -= this->[4] * this->[1] * this->[10];
+		det -= this->[0] * this->[9] * this->[6];
+		return det;
+	}
+
+	/// Calculates the determinant of a matrix<T,4,4>
+	T determinant() const {
+		return det();
+	}
+
+	/// Calculates the inverse of a matrix4<t>
+	const matrix<T, 4, 4> inv() {
+		T det = det();
+		if (fabs(det) < static_cast<T>(0.0005)) {
+			return matrix<T, 4, 4>();
+		}
+		T idet = static_cast<T>(1.0) / det;
+
+		matrix<T, 4, 4> invM;
+		invM[0] = (this->[5] * this->[10] - this->[9] * this->[6]) * idet;
+		invM[1] = -(this->[1] * this->[10] - this->[9] * this->[2]) * idet;
+		invM[2] = (this->[1] * this->[6] - this->[5] * this->[2]) * idet;
+		invM[3] = 0.0;
+		invM[4] = -(this->[4] * this->[10] - this->[8] * this->[6]) * idet;
+		invM[5] = (this->[0] * this->[10] - this->[8] * this->[2]) * idet;
+		invM[6] = -(this->[0] * this->[6] - this->[4] * this->[2]) * idet;
+		invM[7] = 0.0;
+		invM[8] = (this->[4] * this->[9] - this->[8] * this->[5]) * idet;
+		invM[9] = -(this->[0] * this->[9] - this->[8] * this->[1]) * idet;
+		invM[10] = (this->[0] * this->[5] - this->[4] * this->[1]) * idet;
+		invM[11] = 0.0;
+		invM[12] = -(this->[12] * invM[0] + this->[13] * invM[4] + this->[14] * invM[8]);
+		invM[13] = -(this->[12] * invM[1] + this->[13] * invM[5] + this->[14] * invM[9]);
+		invM[14] = -(this->[12] * invM[2] + this->[13] * invM[6] + this->[14] * invM[10]);
+		invM[15] = 1.0;
+		return invM;
+	}
+
+	/// Calculates the inverse of a matrix4<t>
+	const matrix<T, 4, 4> inverse() {
+		return inv();
 	}
 };
 

@@ -20,6 +20,8 @@
   Cengiz Terzibas         cengiz@terzibas.de
 */
 
+//Source modified by Cory Parks 09/2017
+
 #ifndef MATRIXNXM_H
 #define MATRIXNXM_H
 
@@ -33,7 +35,7 @@ namespace tmath{
 	@brief 			Class that represents a n x m matrix
 	@author 		Cengiz Terzibas
 */
-
+/*
 template<typename T, int N, int M>
 class matrix {
 public:
@@ -195,7 +197,7 @@ public:
 	}
 
 };
-
+*/
 }
 
 #endif

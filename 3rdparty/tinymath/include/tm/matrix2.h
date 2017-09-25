@@ -20,6 +20,8 @@
   Cengiz Terzibas         cengiz@terzibas.de
 */
 
+//Source modified by Cory Parks 09/2017
+
 #ifndef MATRIX2_H
 #define MATRIX2_H
 
@@ -40,8 +42,8 @@ public:
 	T yx, yy;
 	// constructors
 	matrix<T,2,2>() :	xx(static_cast<T>(0.0)),
-										xy(static_cast<T>(0.0)), 
-										yx(static_cast<T>(0.0)), 
+										xy(static_cast<T>(0.0)),
+										yx(static_cast<T>(0.0)),
 										yy(static_cast<T>(0.0)) {
 	}
 	matrix<T,2,2>(	T a0, T a1,
@@ -59,7 +61,7 @@ public:
 	}
 	// assignment operations
 	inline matrix<T,2,2> operator+=(const matrix<T,2,2>& m) {
-		xx += m.xx; xy += m.xy; 
+		xx += m.xx; xy += m.xy;
 		yx += m.yx; yy += m.yy;
 		return *this;
 	}
@@ -120,7 +122,7 @@ public:
 	}
 	 inline friend matrix<T,2,2> operator*(const matrix<T,2,2>& m1, const matrix<T,2,2>& m2 )  {
 		return matrix<T,2,2>(m1.xx * m2.xx + m1.xy * m2.yx,
-											m1.xx * m2.xy + m1.xy * m2.yy, 
+											m1.xx * m2.xy + m1.xy * m2.yy,
 											m1.yx * m2.xx + m1.yy * m2.yx,
 											m1.yx * m2.xy + m1.yy * m2.yy);
 	}
@@ -152,6 +154,60 @@ public:
 	operator const T*() const {
 		return &xx;
 	}
+
+	/// Transpose the matrix<T,2,2>
+	const matrix<T, 2, 2> transp() const {
+		return matrix<T, 2, 2>(xx, yx,
+									xy, yy);
+	}
+
+	/// Transpose the matrix<T,2,2>
+	const matrix<T, 2, 2> transpose() const {
+		return transp();
+	}
+
+	/// Make a null matrix<T,2,2>
+	inline void null() {
+		xx = static_cast<T>(0.0); xy = static_cast<T>(0.0);
+		yx = static_cast<T>(0.0); yy = static_cast<T>(0.0);
+	}
+
+	/// Make a identity matrix<T,2,2>
+	inline void identity() {
+		xx = static_cast<T>(1.0); xy = static_cast<T>(0.0);
+		yx = static_cast<T>(0.0); yy = static_cast<T>(1.0);
+	}
+
+	/// Calculate the determinant of a matrix
+	T det() const {
+		T det;
+		det = (xx * yy) - (xy * yx);
+		return det;
+	}
+
+	/// Calculate the determinant of a matrix
+	T determinant() const {
+		return det();
+	}
+
+	/// Calculate the inverse of a matrix
+	const matrix<T, 2, 2> inv() const {
+		T detinv;
+		T detval = det();
+		if (fabs(detval) < static_cast<T>(0.0005)) {
+			return matrix<T, 2, 2>();
+		}
+		detinv = static_cast<T>(1.0) / detval;
+		return matrix<T, 3, 3>(yy*detinv, -xy*detinv,
+									 -yx*detinv,  xx*detinv);
+	}
+
+	/// Calculate the inverse of a matrix
+	const matrix<T, 2, 2> inverse() const {
+		return inv();
+	}
+
+
 };
 
 

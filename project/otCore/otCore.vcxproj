@@ -73,6 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\otCore\GUID.h" />
     <ClInclude Include="..\..\include\otCore\ITime.h" />
     <ClInclude Include="..\..\include\otCore\JSON.h" />
     <ClInclude Include="..\..\include\otCore\otTime.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="..\..\include\otCore\StringUtility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\otCore\GUID.cpp" />
     <ClCompile Include="..\..\src\otCore\JSON.cpp" />
     <ClCompile Include="..\..\src\otCore\otTime.cpp" />
     <ClCompile Include="..\..\src\otCore\Paths.cpp" />

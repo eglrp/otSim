@@ -33,6 +33,9 @@ class matrix;
 template<typename T>
 inline vectorn<T,3>& normalize(vectorn<T,3>& v);
 
+//template<typename T>
+//class quaternion;
+
 /**
 	@author 		Cengiz Terzibas
 */
@@ -72,6 +75,22 @@ public:
 		yx = m.yx; yy = m.yy; yz = m.yz;
 		zx = m.zx; zy = m.zy; zz = m.zz;
 	}
+
+	/// Converts a quaternion into a matrix<T,3,3>
+	matrix<T, 3, 3>(const quaternion<T>& q) {
+		xx = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.y * q.y + q.z * q.z);
+		xy = static_cast<T>(2.0) * (q.x * q.y - q.z * q.w);
+		xz = static_cast<T>(2.0) * (q.x * q.z + q.y * q.w);
+
+		yx = static_cast<T>(2.0) * (q.x * q.y + q.z * q.w);
+		yy = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.x * q.x + q.z * q.z);
+		yz = static_cast<T>(2.0) * (q.z * q.y - q.x * q.w);
+
+		zx = static_cast<T>(2.0) * (q.x * q.z - q.y * q.w);
+		zy = static_cast<T>(2.0) * (q.y * q.z + q.x * q.w);
+		zz = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.x * q.x + q.y * q.y);
+	}
+
 	// assignment operations
 	inline matrix<T,3,3> operator+=(const matrix<T,3,3>& m) {
 		xx += m.xx; xy += m.xy; xz += m.xz;
@@ -201,6 +220,72 @@ public:
 	operator const T*() const {
 		return &xx;
 	}
+
+	/// Transpose the matrix<T,3,3>
+	const matrix<T, 3, 3> transp() const {
+		return matrix<T, 3, 3>(xx, yx, zx,
+										xy, yy, zy,
+										xz, yz, zz);
+		//matrix<T, 3, 3> transpM();
+		//for (int i = 0; i < 3; i++) {
+		//	for (int j = 0; j < 3; j++) {
+		//		std::copy(&this->[i + j * 3], &this->[i + j * 3] + 1, &transpM[j + i * 3]);
+		//	}
+		//}
+		//return transpM;
+	}
+
+	/// Transpose the matrix<T,3,3>
+	const matrix<T, 3, 3> transpose() const {
+		return transp();
+	}
+
+	/// Make a null matrix<T,3,3>
+	inline void null() {
+		xx = static_cast<T>(0.0); xy = static_cast<T>(0.0); xz = static_cast<T>(0.0);
+		yx = static_cast<T>(0.0); yy = static_cast<T>(0.0); yz = static_cast<T>(0.0);
+		zx = static_cast<T>(0.0); zy = static_cast<T>(0.0); zz = static_cast<T>(0.0);
+	}
+
+	/// Make a identity matrix<T,3,3>
+	inline void identity() {
+		xx = static_cast<T>(1.0); xy = static_cast<T>(0.0); xz = static_cast<T>(0.0);
+		yx = static_cast<T>(0.0); yy = static_cast<T>(1.0); yz = static_cast<T>(0.0);
+		zx = static_cast<T>(0.0); zy = static_cast<T>(0.0); zz = static_cast<T>(1.0);
+	}
+
+	/// Calculate the determinant of a matrix
+	T det() const {
+		T det;
+		det = this->[0] * (yy * zz - yz * zy)
+			- this->[3] * (zz * xy - zy * xz)
+			+ this->[7] * (yz * xy - yy * xz);
+		return det;
+	}
+
+	/// Calculate the determinant of a matrix
+	T determinant() const {
+		return det();
+	}
+
+	/// Calculate the inverse of a matrix
+	const matrix<T, 3, 3> inv() const {
+		T detinv;
+		T detval = det();
+		if (fabs(detval) < static_cast<T>(0.0005)) {
+			return matrix<T, 3, 3>();
+		}
+		detinv = static_cast<T>(1.0) / detval;
+		return matrix<T, 3, 3>((zz*yy - zy*yz)*detinv, -(zz*xy - zy*xz)*detinv,  (yz*xy - yy*xz)*detinv,
+									 -(zz*yx - zx*yz)*detinv,  (zz*xx - zx*xz)*detinv, -(yz*xx - yx*xz)*detinv,
+									  (zy*yx - zx*yy)*detinv, -(zy*xx - zx*xy)*detinv,  (yy*xx - yx*xy)*detinv);
+	}
+
+	/// Calculate the inverse of a matrix
+	const matrix<T, 3, 3> inverse() const {
+		return inv();
+	}
+
 };
 
 

@@ -7,6 +7,8 @@
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
+// Source modified by Cory Parks 09/2017
+
 #if !defined(GEOGRAPHICLIB_GEODESIC_HPP)
 #define GEOGRAPHICLIB_GEODESIC_HPP 1
 
@@ -962,6 +964,50 @@ namespace GeographicLib {
      * ellipsoid.
      **********************************************************************/
     static const Geodesic& WGS84();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//Direct Solution Methods
+
+	void VincentyDirect(real lat1, real lon1, real& lat2, real& lon2,
+		real s12, real azi1, real& azi2) const;
+
+	void HaversineDirect(real lat1, real lon1, real& lat2, real& lon2,
+		real s12, real azi1, real& azi2) const;
+
+
+	//Inverse Solution Methods
+
+
+	void KarneyInverse(real lat1, real lon1, real lat2, real lon2,
+		real& s12, real& azi1, real& azi2) const
+	{
+		Inverse(lat1, lon1, lat2, lon2, s12, azi1, azi2);
+	}
+
+	void VincentyInverse(real lat1, real lon1, real lat2, real lon2,
+		real& s12, real& azi1, real& azi2) const;
+
+	void HaversineInverse(real lat1, real lon1, real lat2, real lon2,
+		real& s12, real& azi1, real& azi2) const;
+
+	void EquirectangularInverse(real lat1, real lon1, real lat2, real lon2,
+		real& s12, real& azi1, real& azi2) const;
+
+	void LawOfCosinesInverse(real lat1, real lon1, real lat2, real lon2,
+		real& s12, real& azi1, real& azi2) const;
 
   };
 
