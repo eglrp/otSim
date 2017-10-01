@@ -26,6 +26,7 @@
 #define MATRIX3_H
 
 namespace tmath{
+const double pi = 3.1415926535897932384626433832795;
 
 template<typename T, int N, int M>
 class matrix;
@@ -76,19 +77,50 @@ public:
 		zx = m.zx; zy = m.zy; zz = m.zz;
 	}
 
-	/// Converts a quaternion into a matrix<T,3,3>
+	/// Constructs a matrix<T,3,3> from yaw-pitch-roll euler rotations
+	matrix<T, 3, 3>(T yaw, T pitch, T roll) {
+		T sinYaw = sin(yaw);
+		T cosYaw = cos(yaw);
+		T sinPitch = sin(pitch);
+		T cosPitch = cos(pitch);
+		T sinRoll = sin(roll);
+		T cosRoll = cos(roll);
+
+		//	ZYX Rotation Sequence (Yaw-Pitch-Roll)
+		//    [	cosPitch*cosYaw,								cosPitch*sinYaw,								-sinPitch			]
+		//    [	sinPitch*sinRoll*cosYaw - sinYaw*cosRoll,		sinPitch*sinRoll*sinYaw + cosYaw*cosRoll,		cosPitch*sinRoll	]
+		//    [	sinPitch*cosRoll*cosYaw + sinYaw*sinRoll,		sinPitch*cosRoll*sinYaw - cosYaw*sinRoll,		cosPitch*cosRoll	]
+
+		xx = cosYaw*cosPitch;								xy = sinYaw*cosPitch;								xz = -sinPitch;
+		yx = -sinYaw*cosRoll + cosYaw*sinPitch*sinRoll; 	yy = cosYaw*cosRoll + sinYaw*sinPitch*sinRoll;		yz = cosPitch*sinRoll;
+		zx = cosYaw*sinPitch*cosRoll + sinYaw*sinRoll;		zy = -cosYaw*sinRoll + sinYaw*sinPitch*cosRoll;		zz = cosPitch*cosRoll;
+	}
+
+	/// Constructs a matrix<T,3,3> from a quaternion rotation
 	matrix<T, 3, 3>(const quaternion<T>& q) {
-		xx = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.y * q.y + q.z * q.z);
-		xy = static_cast<T>(2.0) * (q.x * q.y - q.z * q.w);
-		xz = static_cast<T>(2.0) * (q.x * q.z + q.y * q.w);
 
-		yx = static_cast<T>(2.0) * (q.x * q.y + q.z * q.w);
-		yy = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.x * q.x + q.z * q.z);
-		yz = static_cast<T>(2.0) * (q.z * q.y - q.x * q.w);
+		T qwqw = q.w*q.w;
+		T qxqx = q.x*q.x;
+		T qyqy = q.y*q.y;
+		T qzqz = q.z*q.z;
+		T qxqw = q.x*q.w;
+		T qyqw = q.y*q.w;
+		T qzqw = q.z*q.w;
+		T qxqy = q.x*q.y;
+		T qxqz = q.x*q.z;
+		T qyqz = q.y*q.z;
 
-		zx = static_cast<T>(2.0) * (q.x * q.z - q.y * q.w);
-		zy = static_cast<T>(2.0) * (q.y * q.z + q.x * q.w);
-		zz = static_cast<T>(1.0) - static_cast<T>(2.0) * (q.x * q.x + q.y * q.y);
+		xx = static_cast<T>(1.0) - static_cast<T>(2.0) * (qyqy + qzqz);
+		xy = static_cast<T>(2.0) * (qxqy + qzqw);
+		xz = static_cast<T>(2.0) * (qxqz - qyqw);
+
+		yx = static_cast<T>(2.0) * (qxqy - qzqw);
+		yy = static_cast<T>(1.0) - static_cast<T>(2.0) * (qxqx + qzqz);
+		yz = static_cast<T>(2.0) * (qyqz + qxqw);
+
+		zx = static_cast<T>(2.0) * (qxqz + qyqw);
+		zy = static_cast<T>(2.0) * (qyqz - qxqw);
+		zz = static_cast<T>(1.0) - static_cast<T>(2.0) * (qxqx + qyqy);
 	}
 
 	// assignment operations
@@ -286,6 +318,78 @@ public:
 		return inv();
 	}
 
+	/// Returns the euler angles from the rotation matrix
+	void getEulerAngles(T& yaw, T& pitch, T& roll) {
+
+		//	ZYX Rotation Sequence (Yaw-Pitch-Roll)
+
+		if (xx == 0.0)
+			yaw = 0.5*pi;
+		else {
+			yaw = atan2(xy, xx);
+		}
+
+		if (xz < -1.0)
+			pitch = 0.5*pi;
+		else if (1.0 < xz)
+			pitch = -0.5*pi;
+		else
+			pitch = asin(-xz);
+
+		if (zz == 0.0)
+			roll = 0.5*pi;
+		else
+			roll = atan2(yz, zz);
+	}
+
+	/// Returns the quaternion rotation from the rotation matrix
+	tmath::quaternion<T> getQuaternion() {
+		tmath::quaternion<T> q;
+		T tempQ[4];
+		int idx;
+
+		tempQ[0] = static_cast<T>(1.0) + xx + yy + zz;
+
+		tempQ[1] = static_cast<T>(1.0) + xx - yy - zz;
+		tempQ[2] = static_cast<T>(1.0) - xx + yy - zz;
+		tempQ[3] = static_cast<T>(1.0) - xx - yy + zz;
+
+		// Find largest of the above
+		idx = 0;
+		for (int i = 1; i < 4; i++) if (tempQ[i] > tempQ[idx]) idx = i;
+
+		switch (idx) {
+		case 0:
+			q.w = 0.50*sqrt(tempQ[0]);
+			q.x = 0.25*(yz - zy) / q.w;
+			q.y = 0.25*(zx - xz) / q.w;
+			q.z = 0.25*(xy - yx) / q.w;
+			break;
+		case 1:
+			q.x = 0.50*sqrt(tempQ[1]);
+			q.w = 0.25*(yz - zy) / q.x;
+			q.y = 0.25*(xy + yx) / q.x;
+			q.z = 0.25*(zx + xz) / q.x;
+			break;
+		case 2:
+			q.y = 0.50*sqrt(tempQ[2]);
+			q.w = 0.25*(zx - xz) / q.y;
+			q.x = 0.25*(xy + yx) / q.y;
+			q.z = 0.25*(yz + zy) / q.y;
+			break;
+		case 3:
+			q.z = 0.50*sqrt(tempQ[3]);
+			q.w = 0.25*(xy - yx) / q.z;
+			q.x = 0.25*(xz + zx) / q.z;
+			q.y = 0.25*(yz + zy) / q.z;
+			break;
+		default:
+			//error
+			break;
+		}
+
+		return q;
+	}
 };
 
 

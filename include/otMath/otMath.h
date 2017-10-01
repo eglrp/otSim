@@ -53,7 +53,7 @@ typedef tmath::matrix<float, 3, 3> Matrix33f;
 typedef tmath::matrix<float, 4, 4> Matrix44f;
 
 typedef tmath::quaternion<double> Quaternion;
-typedef tmath::quaternion<double> Quaternionf;
+typedef tmath::quaternion<float> Quaternionf;
 
 
 

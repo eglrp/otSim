@@ -13,7 +13,7 @@
     </Link>
     <ClCompile />
     <ClCompile>
-      <AdditionalIncludeDirectories>../../3rdparty;../../3rdparty/jsoncpp;../../3rdparty/tinymath/include;../../3rdparty/Splines/src;../../3rdparty/GeographicLib/include;../../include;../../include/otSimWrapper;../../include/otSim;../../include/otCore;../../include/otMain;../../include/otMath;../../include/otWorld;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rdparty;../../3rdparty/jsoncpp;../../3rdparty/tinymath/include;../../3rdparty/Splines/src;../../3rdparty/GeographicLib/include;../../3rdparty/ois/includes;../../include;../../include/otSimWrapper;../../include/otSim;../../include/otCore;../../include/otMain;../../include/otMath;../../include/otWorld;../../include/otInput;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

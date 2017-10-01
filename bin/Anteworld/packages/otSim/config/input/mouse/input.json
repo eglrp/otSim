@@ -1,0 +1,57 @@
+// Input Mouse Key Bindings
+{		
+	"KeyBindings" : {
+		"Categories" : {
+			"View" : [
+
+			],
+		}
+	},
+	"AxisBindings" : {
+		"Categories" : {
+			"View" : [
+				//{"displayName" : "View Rotate Horizontal Axis",
+				//"axis" : "MOUSE_X",
+				//"axisCommand" : "COMMAND_AXIS_CONTROL_ROLL",
+				//"relative" : true,
+				//"scalar" : 0.0002},
+				//
+				//{"displayName" : "View Rotate Vertical Axis",
+				//"axis" : "MOUSE_Y",
+				//"axisCommand" : "COMMAND_AXIS_CONTROL_PITCH",
+				//"relative" : true,
+				//"scalar" : 0.0002},				
+				//
+				//{"displayName" : "View Move Longitudinal Axis",
+				//"axis" : "MOUSE_Z",
+				//"axisCommand" : "COMMAND_AXIS_CONTROL_THROTTLE",
+				//"relative" : true,
+				//"scalar" : 4.1667E-04},
+				
+				{"displayName" : "View Rotate Horizontal Axis",
+				"axis" : "MOUSE_X",
+				"axisCommand" : "COMMAND_AXIS_VIEW_ROTATE_HORIZONTAL"},
+				
+				{"displayName" : "View Rotate Vertical Axis",
+				"axis" : "MOUSE_Y",
+				"axisCommand" : "COMMAND_AXIS_VIEW_ROTATE_VERTICAL",				
+				"invert" : true},				
+				
+				{"displayName" : "View Move Longitudinal Axis",
+				"axis" : "MOUSE_Z",
+				"axisCommand" : "COMMAND_AXIS_VIEW_MOVE_LONGITUDINAL",
+				"relative" : true},
+				
+				//{"displayName" : "View Move Lateral Axis",
+				//"axis" : "MOUSE_X",
+				//"axisCommand" : "COMMAND_AXIS_VIEW_MOVE_LATERAL",
+				//"relative" : true},
+				//
+				//{"displayName" : "View Move Vertical Axis",
+				//"axis" : "MOUSE_Z",
+				//"axisCommand" : "COMMAND_AXIS_VIEW_MOVE_VERTICAL",
+				//"relative" : true}
+			]
+		}
+	}
+}

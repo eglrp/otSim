@@ -79,6 +79,7 @@
     <ClInclude Include="..\..\include\otCore\otTime.h" />
     <ClInclude Include="..\..\include\otCore\Paths.h" />
     <ClInclude Include="..\..\include\otCore\Singleton.h" />
+    <ClInclude Include="..\..\include\otCore\Stopwatch.h" />
     <ClInclude Include="..\..\include\otCore\StringUtility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,7 @@
     <ClCompile Include="..\..\src\otCore\JSON.cpp" />
     <ClCompile Include="..\..\src\otCore\otTime.cpp" />
     <ClCompile Include="..\..\src\otCore\Paths.cpp" />
+    <ClCompile Include="..\..\src\otCore\Stopwatch.cpp" />
     <ClCompile Include="..\..\src\otCore\StringUtility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

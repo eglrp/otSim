@@ -24,10 +24,14 @@ INCLUDES
 
 #include "otMath.h"
 #include "ITime.h"
+#include "AddonManager.h"
 #include "WorldManager.h"
+#include "Stopwatch.h"
 #include "Conversions.h"
 #include "Paths.h"
 #include "JSON.h"
+#include "Input.h"
+
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 CLASS IMPLEMENTATION
@@ -76,8 +80,23 @@ otWorld::Ellipsoid* earth;
 
 Main::Main()
 {
+	otCore::Paths::createGamePreferencesStructure();
+
+	otInput::Input::getInstance().update();
+
 	//Initialize time class
 	otCore::TimeInitilizer::initialize();
+
+	AddonManager* addonManager = &AddonManager::getInstance();
+	addonManager->enumerateAddons();
+	//otCore::Log::message("Number of addons found: %d", addonManager->getNumberAddons());
+
+	otCore::Stopwatch loadTimer;
+
+	loadTimer.start();
+
+	//otCore::Log::message("Number of object types added to the database: %d ... %.0f ms", objectDB->getNumberObjectTypes(), loadTimer.getElapsedTime());
+
 
 	//Read Celestial Object JSON files
 	std::string coreCelestialBodiesPath = otCore::Paths::getAddonsDir() + "\\Core_Celestial_Bodies\\bodies";
@@ -98,9 +117,8 @@ Main::~Main()
 
 void Main::updateSimulation(float dt)
 {
-
-
-	double x = 0;
+	//Poll input devices at the graphics frame rate
+	otInput::Input::getInstance().update();
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

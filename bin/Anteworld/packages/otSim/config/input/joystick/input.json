@@ -1,0 +1,88 @@
+// Input Joystick Bindings
+{
+	"Joysticks" : {
+		"Thrustmaster Virtual Game Controller (root)" : {
+			"KeyBindings" : {
+				"Categories" : {
+				}
+			},
+			"AxisBindings" : {
+				"Categories" : {
+					"Flight Control" : [
+						{"displayName" : "Roll Axis",
+						"axis" : "JOY_X",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_ROLL",
+						"curvature" : 0.25,
+						"deadzone" : 0.03 },
+						
+						{"displayName" : "Pitch Axis",
+						"axis" : "JOY_Y",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_PITCH",
+						"curvature" : 0.33 },
+						
+						{"displayName" : "Throttle Axis",
+						"axis" : "JOY_Z",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_THROTTLE"},
+					]
+				}
+			}
+		},
+		"Joystick - HOTAS Warthog" : {
+			"KeyBindings" : {
+				"Categories" : {
+				}
+			},
+			"AxisBindings" : {
+				"Categories" : {
+					"Flight Control" : [
+						{"displayName" : "Roll Axis",
+						"axis" : "JOY_Y",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_ROLL",
+						"curvature" : 0.30,
+						"deadzone" : 0.05 },
+						
+						{"displayName" : "Pitch Axis",
+						"axis" : "JOY_X",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_PITCH",
+						"curvature" : 0.33 },
+					]
+				}
+			}
+		},
+		"Throttle - HOTAS Warthog" : {
+			"KeyBindings" : {
+				"Categories" : {
+				}
+			},
+			"AxisBindings" : {
+				"Categories" : {
+					"Flight Control" : [
+						{"displayName" : "Throttle Axis",
+						"axis" : "JOY_Z",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_THROTTLE"},
+					]
+				}
+			}
+		},
+		"Saitek Pro Flight Rudder Pedals" : {
+			"KeyBindings" : {
+				"Categories" : {
+				}
+			},
+			"AxisBindings" : {
+				"Categories" : {
+					"Flight Control" : [
+						{"displayName" : "Rudder Axis",
+						"axis" : "JOY_Z",
+						"axisCommand" : "COMMAND_AXIS_CONTROL_YAW",
+						"curvature" : 0.40,
+						"deadzone" : 0.10 },
+					]
+				}
+			}
+		},
+	}
+}
+
+
+

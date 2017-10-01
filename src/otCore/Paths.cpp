@@ -98,6 +98,19 @@ bool Paths::pathExists(const std::string &path)
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+void Paths::createPath(const std::string &path)
+{
+	if (!pathExists(path)) {
+#if WIN32
+		CreateDirectory(path.c_str(), NULL);
+#else
+		mkdir(path.data(), 0777);
+#endif
+	}
+}
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 bool Paths::fileExists(const std::string &filePath)
 {
 	struct stat buf;
@@ -346,6 +359,25 @@ std::vector<std::string> Paths::findFilesInFolder(const std::string& folder, con
 #endif
 
 	return files;
+}
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+void Paths::createGamePreferencesStructure()
+{
+	std::string gpPath = getGamePreferencesDir();
+	std::string caddonsPath = getCustomAddonsDir();
+	std::string ccPath = getCustomConfigDir();
+	std::string cinputPath = getCustomInputDir();
+	std::string scenarioPath = getCustomScenariosDir();
+	std::string logsPath = getLogsDir();
+
+	createPath(gpPath);
+	createPath(caddonsPath);
+	createPath(ccPath);
+	createPath(cinputPath);
+	createPath(scenarioPath);
+	createPath(logsPath);
 }
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

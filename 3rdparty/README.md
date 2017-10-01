@@ -20,3 +20,4 @@ These libraries are integrated into one or more of otSim's
 projects and will be built automatically by otSim compilation.
 * [Splines](https://github.com/ebertolazzi/Splines)
 * [tinymath](https://sourceforge.net/projects/tinymath/)
+* [OIS](https://github.com/wgois/OIS)

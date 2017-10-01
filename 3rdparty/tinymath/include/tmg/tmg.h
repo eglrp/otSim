@@ -61,25 +61,38 @@ void rotz(const T angle, tmath::quaternion<T>& q) {
 
 /// Converts a quaternion orientation into euler angles
 template<class T>
-void q2e(const tmath::quaternion<T>& q, T& anglex, T& angley, T& anglez) {
-	anglex = atan(2*(q.y*q.z + q.w*q.x)/ (q.w*q.w - q.x*q.w - q.y*q.y + q.z*q.z));
-	angley  = asin(-2*(q.x*q.z - q.w*q.y));
-	anglez  = atan(2*(q.x*q.y + q.w*q.z)/ (q.w*q.w+ q.x*q.x - q.y*q.y - q.z*q.z));
-}
+void q2e(const tmath::quaternion<T>& q, T& yaw, T& pitch, T& roll) {
 
-/// Converts euler angles into a quaternion orienation
-template<typename T>
-tmath::quaternion<T> e2q(T yaw, T pitch, T roll) {
-  T cosYaw		= cos(yaw / static_cast<T>(2.0));
-  T sinYaw		= sin(yaw / static_cast<T>(2.0));
-  T cosPitch	= cos(pitch / static_cast<T>(2.0));
-  T sinPitch	= sin(pitch / static_cast<T>(2.0));
-  T cosRoll		= cos(roll / static_cast<T>(2.0));
-  T sinRoll		= sin(roll / static_cast<T>(2.0));
-  return tmath::quaternion<T>(	cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw,
-														cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw,
-														sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw,
-														cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw);
+	//	ZYX Rotation Sequence (Yaw-Pitch-Roll)
+
+	T qwqw = q.w*q.w;
+	T qxqx = q.x*q.x;
+	T qyqy = q.y*q.y;
+	T qzqz = q.z*q.z;
+
+	T mat11 = qwqw + qxqx - qyqy - qzqz;
+	T mat12 = static_cast<T>(2.0)*(q.x*q.y + q.w*q.z);
+	T mat13 = static_cast<T>(2.0)*(q.x*q.z - q.w*q.y);
+	T mat23 = static_cast<T>(2.0)*(q.y*q.z + q.w*q.x);
+	T mat33 = qwqw - qxqx - qyqy + qzqz;
+
+	if (mat11 == 0.0)
+		yaw = 0.5*pi;
+	else {
+		yaw = atan2(mat12, mat11);
+	}
+
+	if (mat13 < -1.0)
+		pitch = 0.5*pi;
+	else if (1.0 < mat13)
+		pitch = -0.5*pi;
+	else
+		pitch = asin(-mat13);
+
+	if (mat33 == 0.0)
+		roll = 0.5*pi;
+	else
+		roll = atan2(mat23, mat33);
 }
 
 /// Converts euler angles into a quaternion orienation
@@ -91,10 +104,24 @@ void e2q(T yaw, T pitch, T roll, tmath::quaternion<T>& q) {
   T sinPitch	= sin(pitch / static_cast<T>(2.0));
   T cosRoll		= cos(roll / static_cast<T>(2.0));
   T sinRoll		= sin(roll / static_cast<T>(2.0));
-  q.x = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
-	q.y = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
-	q.z = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
-	q.w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
+
+	double cosRoll_cosPitch = cosRoll*cosPitch;
+	double cosRoll_sinPitch = cosRoll*sinPitch;
+	double sinRoll_sinPitch = sinRoll*sinPitch;
+	double sinRoll_cosPitch = sinRoll*cosPitch;
+
+	q.x = sinRoll_cosPitch*cosYaw - cosRoll_sinPitch*sinYaw;
+	q.y = cosRoll_sinPitch*cosYaw + sinRoll_cosPitch*sinYaw;
+	q.z = cosRoll_cosPitch*sinYaw - sinRoll_sinPitch*cosYaw;
+	q.w = cosRoll_cosPitch*cosYaw + sinRoll_sinPitch*sinYaw;
+}
+
+/// Converts euler angles into a quaternion orienation
+template<typename T>
+tmath::quaternion<T> e2q(T yaw, T pitch, T roll) {
+	tmath::quaternion<T> q;
+	e2q(yaw, pitch, roll, q);
+	return q;
 }
 
 
@@ -372,6 +399,149 @@ tmath::quaternion<T>  slerp(tmath::quaternion<T>& q1, tmath::quaternion<T>& q2, 
 			m.ww = 1.0f;
 			transl(eye, trans);
 			return trans;
+	}
+
+	template<typename T>
+	void e2m(T yaw, T pitch, T roll, tmath::matrix<T,3,3>& m) {
+		T sinYaw = sin(yaw);
+		T cosYaw = cos(yaw);
+		T sinPitch = sin(pitch);
+		T cosPitch = cos(pitch);
+		T sinRoll = sin(roll);
+		T cosRoll = cos(roll);
+
+		//	ZYX Rotation Sequence (Yaw-Pitch-Roll)
+		//    [	cosPitch*cosYaw,								cosPitch*sinYaw,								-sinPitch			]
+		//    [	sinPitch*sinRoll*cosYaw - sinYaw*cosRoll,		sinPitch*sinRoll*sinYaw + cosYaw*cosRoll,		cosPitch*sinRoll	]
+		//    [	sinPitch*cosRoll*cosYaw + sinYaw*sinRoll,		sinPitch*cosRoll*sinYaw - cosYaw*sinRoll,		cosPitch*cosRoll	]
+
+		m.xx = cosYaw*cosPitch;								m.xy = sinYaw*cosPitch;								m.xz = -sinPitch;
+		m.yx = -sinYaw*cosRoll + cosYaw*sinPitch*sinRoll; 	m.yy = cosYaw*cosRoll + sinYaw*sinPitch*sinRoll;	m.yz = cosPitch*sinRoll;
+		m.zx = cosYaw*sinPitch*cosRoll + sinYaw*sinRoll;	m.zy = -cosYaw*sinRoll + sinYaw*sinPitch*cosRoll;	m.zz = cosPitch*cosRoll;
+	}
+
+	template<typename T>
+	tmath::matrix<T, 3, 3> e2m(T yaw, T pitch, T roll) {
+		tmath::matrix<T, 3, 3> m;
+		e2m(yaw, pitch, roll, m);
+		return m;
+	}
+
+	/// Converts a rotation matrix into euler angles
+	template<class T>
+	void m2e(const tmath::matrix<T,3,3>& m, T& yaw, T& pitch, T& roll) {
+
+		//	ZYX Rotation Sequence (Yaw-Pitch-Roll)
+
+		if (m.xx == 0.0)
+			yaw = 0.5*pi;
+		else {
+			yaw = atan2(m.xy, m.xx);
+		}
+
+		if (m.xz < -1.0)
+			pitch = 0.5*pi;
+		else if (1.0 < m.xz)
+			pitch = -0.5*pi;
+		else
+			pitch = asin(-m.xz);
+
+		if (m.zz == 0.0)
+			roll = 0.5*pi;
+		else
+			roll = atan2(m.yz, m.zz);
+	}
+
+	/// Converts a quaternion into a matrix<T,3,3>
+	template<typename T>
+	void q2m(const tmath::quaternion<T>& q, tmath::matrix<T, 3, 3>& m) {
+
+		T qwqw = q.w*q.w;
+		T qxqx = q.x*q.x;
+		T qyqy = q.y*q.y;
+		T qzqz = q.z*q.z;
+		T qxqw = q.x*q.w;
+		T qyqw = q.y*q.w;
+		T qzqw = q.z*q.w;
+		T qxqy = q.x*q.y;
+		T qxqz = q.x*q.z;
+		T qyqz = q.y*q.z;
+
+		m.xx = static_cast<T>(1.0) - static_cast<T>(2.0) * (qyqy + qzqz);
+		m.xy = static_cast<T>(2.0) * (qxqy + qzqw);
+		m.xz = static_cast<T>(2.0) * (qxqz - qyqw);
+
+		m.yx = static_cast<T>(2.0) * (qxqy - qzqw);
+		m.yy = static_cast<T>(1.0) - static_cast<T>(2.0) * (qxqx + qzqz);
+		m.yz = static_cast<T>(2.0) * (qyqz + qxqw);
+
+		m.zx = static_cast<T>(2.0) * (qxqz + qyqw);
+		m.zy = static_cast<T>(2.0) * (qyqz - qxqw);
+		m.zz = static_cast<T>(1.0) - static_cast<T>(2.0) * (qxqx + qyqy);
+	}
+
+	/// Converts a quaternion into a matrix<T,3,3>
+	template<typename T>
+	tmath::matrix<T, 3, 3> q2m(const tmath::quaternion<T>& q) {
+		tmath::matrix<T, 3, 3> m;
+		q2m(q, m);
+		return m;
+	}
+
+	/// Converts a rotation matrix<T,3,3> into a quaternion rotation
+	template<typename T>
+	void m2q(const tmath::matrix<T, 3, 3>& m, tmath::quaternion<T>& q) {
+
+		T tempQ[4];
+		int idx;
+
+		tempQ[0] = static_cast<T>(1.0) + m.xx + m.yy + m.zz;
+
+		tempQ[1] = static_cast<T>(1.0) + m.xx - m.yy - m.zz;
+		tempQ[2] = static_cast<T>(1.0) - m.xx + m.yy - m.zz;
+		tempQ[3] = static_cast<T>(1.0) - m.xx - m.yy + m.zz;
+
+		// Find largest of the above
+		idx = 0;
+		for (int i = 1; i < 4; i++) if (tempQ[i] > tempQ[idx]) idx = i;
+
+		switch (idx) {
+		case 0:
+			q.w = 0.50*sqrt(tempQ[0]);
+			q.x = 0.25*(m.yz - m.zy) / q.w;
+			q.y = 0.25*(m.zx - m.xz) / q.w;
+			q.z = 0.25*(m.xy - m.yx) / q.w;
+			break;
+		case 1:
+			q.x = 0.50*sqrt(tempQ[1]);
+			q.w = 0.25*(m.yz - m.zy) / q.x;
+			q.y = 0.25*(m.xy + m.yx) / q.x;
+			q.z = 0.25*(m.zx + m.xz) / q.x;
+			break;
+		case 2:
+			q.y = 0.50*sqrt(tempQ[2]);
+			q.w = 0.25*(m.zx - m.xz) / q.y;
+			q.x = 0.25*(m.xy + m.yx) / q.y;
+			q.z = 0.25*(m.yz + m.zy) / q.y;
+			break;
+		case 3:
+			q.z = 0.50*sqrt(tempQ[3]);
+			q.w = 0.25*(m.xy - m.yx) / q.z;
+			q.x = 0.25*(m.xz + m.zx) / q.z;
+			q.y = 0.25*(m.yz + m.zy) / q.z;
+			break;
+		default:
+			//error
+			break;
+		}
+	}
+
+	/// Converts a rotation matrix<T,3,3> into a quaternion rotation
+	template<typename T>
+	tmath::quaternion<T> m2q(const tmath::matrix<T, 3, 3>& m) {
+		tmath::quaternion<T> q;
+		m2q(m, q);
+		return q;
 	}
 
 } // End of namespace

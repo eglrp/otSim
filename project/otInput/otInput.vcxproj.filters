@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\ois">
+      <UniqueIdentifier>{7ac6ddc0-4815-446f-ba19-48595dc26d7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ois">
+      <UniqueIdentifier>{37da31d1-b7cc-49dd-b834-a1f6aa354774}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISFactoryCreator.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISForceFeedback.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISInputManager.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISInterface.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISJoyStick.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISKeyboard.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISMouse.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISMultiTouch.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISObject.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISPrereqs.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OIS.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISConfig.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISEffect.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISEvents.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\OISException.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\win32\Win32InputManager.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\win32\Win32JoyStick.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\win32\Win32KeyBoard.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\win32\Win32Mouse.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\win32\Win32Prereqs.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\ois\includes\win32\Win32ForceFeedback.h">
+      <Filter>Header Files\ois</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otInput\Command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otInput\CommandObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otInput\CommandManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otInput\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otInput\InputMapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\otInput\ActionCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISException.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISForceFeedback.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISInputManager.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISJoyStick.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISKeyboard.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISObject.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\OISEffect.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\win32\Win32ForceFeedback.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\win32\Win32InputManager.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\win32\Win32JoyStick.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\win32\Win32KeyBoard.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\ois\src\win32\Win32Mouse.cpp">
+      <Filter>Source Files\ois</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\otInput\Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\otInput\CommandManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\otInput\InputMapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\otInput\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

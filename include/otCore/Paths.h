@@ -124,6 +124,9 @@ public:
 	//Utility functions
 	///////////////////
 
+	/// Creates the given directory path if it does not already exist
+	static void createPath(const std::string &path);
+
 	/// Returns boolean based on whether the given directory path exists
 	static bool pathExists(const std::string &path);
 
@@ -139,6 +142,8 @@ public:
 	///Set the returnAbsolutePath flag depending on whether absolute paths are needed for the returned file list files.
 	static std::vector<std::string> findFilesInFolder(const std::string& folder, const std::string& extensionsFilter, bool returnAbsolutePath = false);
 
+	///Initialize the entire custom game preferences folder structure in Saved Gamed directory.
+	static void createGamePreferencesStructure();
 };
 
 
